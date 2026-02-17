@@ -35,6 +35,65 @@
   --gold-dark: oklch(0.6 0.1 85);
 }
 
+/* n8n Chat Widget Overrides */
+:root {
+  /* Core Colors */
+  --chat--color-primary: var(--primary) !important;
+  --chat--color-secondary: var(--secondary) !important;
+
+  /* Text Colors */
+  --chat--color-dark: var(--foreground) !important;
+  --chat--color-light: var(--background) !important;
+  /* Often used for text on dark backgrounds */
+
+  /* Layout Backgrounds */
+  --chat--body--background: var(--background) !important;
+  --chat--footer--background: var(--background) !important;
+  --chat--header--background: var(--card) !important;
+  --chat--header--color: var(--card-foreground) !important;
+
+  /* Toggle Button */
+  --chat--toggle--background: var(--primary) !important;
+  --chat--toggle--color: var(--primary-foreground) !important;
+  --chat--toggle--hover--background: var(--primary) !important;
+  /* Opacity handled by browser usually, or use accent */
+
+  /* Messages */
+  --chat--message--bot--background: var(--muted) !important;
+  --chat--message--bot--color: var(--foreground) !important;
+  --chat--message--user--background: var(--primary) !important;
+  --chat--message--user--color: var(--primary-foreground) !important;
+
+  /* Inputs */
+  --chat--input--background: var(--background) !important;
+  --chat--input--text-color: var(--foreground) !important;
+  --chat--input--placeholder--color: var(--muted-foreground) !important;
+
+  /* Window */
+  --chat--window--border: 1px solid var(--border) !important;
+}
+
+.n8n-chat-widget {
+  /* Re-declare key variables here to ensure specificity if needed */
+  --chat--color-primary: var(--primary) !important;
+  --chat--body--background: var(--background) !important;
+  --chat--header--background: var(--card) !important;
+  --chat--header--color: var(--card-foreground) !important;
+}
+
+/* Fallback/Specific Overrides for Elements that might resist variables */
+.n8n-chat-input,
+textarea.n8n-chat-input-field,
+input.n8n-chat-input-field {
+  color: var(--foreground) !important;
+  background-color: var(--background) !important;
+  border-color: var(--border) !important;
+}
+
+textarea.n8n-chat-input-field::placeholder {
+  color: var(--muted-foreground) !important;
+}
+
 @theme inline {
   --font-sans: 'Inter', 'Inter Fallback', sans-serif;
   --font-serif: 'Playfair Display', 'Playfair Display Fallback', serif;

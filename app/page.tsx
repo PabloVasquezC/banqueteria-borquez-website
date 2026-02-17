@@ -1,3 +1,5 @@
+
+
 import { Navbar } from "@/components/navbar"
 import { Hero } from "@/components/hero"
 import { EventCenters } from "@/components/event-centers"
@@ -7,6 +9,7 @@ import { NatureBanner } from "@/components/nature-banner"
 import { Testimonials } from "@/components/testimonials"
 import { ContactForm } from "@/components/contact-form"
 import { Footer } from "@/components/footer"
+import { N8nChat } from "@/components/N8n"
 
 export default function Home() {
   return (
@@ -20,6 +23,7 @@ export default function Home() {
       <Testimonials />
       <ContactForm />
       <Footer />
+      <N8nChat />
     </main>
   )
 }
