@@ -1,20 +1,64 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import Image from "next/image"
+import { useEffect, useState } from "react"
+
+const HERO_IMAGES = [
+  "/images/hero-slide-6.jpg", // People toasting (Celebration)
+  "/images/hero-slide-4.jpg", // Daytime garden (Variety)
+  "/images/hero-slide-3.jpg", // Gourmet food (Detail)
+  "/images/hero-slide-5.jpg", // Evening cocktail (Modern)
+]
 
 export function Hero() {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
+    setPrefersReducedMotion(mediaQuery.matches)
+
+    const handleChange = () => setPrefersReducedMotion(mediaQuery.matches)
+    mediaQuery.addEventListener("change", handleChange)
+    return () => mediaQuery.removeEventListener("change", handleChange)
+  }, [])
+
+  useEffect(() => {
+    if (prefersReducedMotion) return
+
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % HERO_IMAGES.length)
+    }, 6000)
+
+    return () => clearInterval(interval)
+  }, [prefersReducedMotion])
+
   return (
     <section id="inicio" className="relative flex min-h-screen items-center justify-center overflow-hidden">
-      {/* Background image */}
-      <Image
-        src="/images/hero-banquet.jpg"
-        alt="Elegante montaje de banquete"
-        fill
-        className="object-cover"
-        priority
-        quality={90}
-      />
+      {/* Animated background slideshow with Ken Burns effect */}
+      <AnimatePresence mode="popLayout">
+        <motion.div
+          key={currentImageIndex}
+          initial={{ opacity: 0, scale: 1 }}
+          animate={{ opacity: 1, scale: prefersReducedMotion ? 1 : 1.1 }}
+          exit={{ opacity: 0 }}
+          transition={{
+            opacity: { duration: 1.5 },
+            scale: { duration: 7, ease: "linear" }
+          }}
+          className="absolute inset-0 z-0"
+        >
+          <Image
+            src={HERO_IMAGES[currentImageIndex]}
+            alt="Elegante montaje de banquete y gastronomía"
+            fill
+            className="object-cover"
+            priority
+            quality={90}
+          />
+        </motion.div>
+      </AnimatePresence>
 
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/50 to-background" />
@@ -48,7 +92,7 @@ export function Hero() {
         >
           {"Un servicio de banqueteria"}
           <br />
-          <span className="text-gold">{"integral y profesional"}</span>
+          <span className="text-gold-metallic">{"integral y profesional"}</span>
         </motion.h1>
 
         <motion.p

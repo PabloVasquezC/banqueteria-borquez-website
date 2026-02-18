@@ -30,9 +30,13 @@
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
   --radius: 0.5rem;
-  --gold: oklch(0.75 0.12 85);
-  --gold-light: oklch(0.82 0.1 85);
-  --gold-dark: oklch(0.6 0.1 85);
+  /* Refined Gold Palette - More metallic and brilliant */
+  --gold: oklch(0.85 0.16 85);
+  /* Brighter, more vivid gold */
+  --gold-light: oklch(0.92 0.12 95);
+  /* Pale shimmery gold for highlights */
+  --gold-dark: oklch(0.72 0.18 75);
+  /* Deep rich gold for varying depth */
 }
 
 /* n8n Chat Widget Overrides */
@@ -134,6 +138,17 @@ textarea.n8n-chat-input-field::placeholder {
 @layer base {
   * {
     @apply border-border outline-ring/50;
+  }
+
+  /* Metallic Gold Text Effect */
+  .text-gold-metallic {
+    background: linear-gradient(to bottom right,
+        var(--gold-light) 0%,
+        var(--gold) 50%,
+        var(--gold-dark) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
   body {
