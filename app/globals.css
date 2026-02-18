@@ -135,6 +135,7 @@ textarea.n8n-chat-input-field::placeholder {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -144,13 +145,16 @@ textarea.n8n-chat-input-field::placeholder {
 ::-webkit-scrollbar {
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: oklch(0.1 0 0);
 }
+
 ::-webkit-scrollbar-thumb {
   background: oklch(0.4 0.06 85);
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: oklch(0.55 0.08 85);
 }

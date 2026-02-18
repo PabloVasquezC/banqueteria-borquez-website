@@ -1,10 +1,16 @@
 "use client"
 import { useEffect } from "react"
-import "@/app/globals.css"
+
 
 
 export function N8nChat() {
   useEffect(() => {
+    // Dynamically import the n8n chat CSS
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = '/n8n/chat.css';
+    document.head.appendChild(link);
+
     import("@n8n/chat").then(({ createChat }) => {
       createChat({
         webhookUrl:
