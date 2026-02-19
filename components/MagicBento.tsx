@@ -31,6 +31,7 @@ export interface BentoProps {
     isLoading?: boolean; // New: Loading state prop
     hideText?: boolean; // New: Hide text content
     onCardClick?: (index: number) => void; // New: Card click handler
+    enableEntrance?: boolean; // New: Control entrance animation
 }
 
 const DEFAULT_PARTICLE_COUNT = 12;
@@ -129,6 +130,7 @@ const ParticleCard: React.FC<{
     enableMagnetism?: boolean;
     onClick?: () => void;
     index?: number;
+    enableEntrance?: boolean;
 }> = ({
     children,
     className = '',
@@ -140,7 +142,8 @@ const ParticleCard: React.FC<{
     clickEffect = false,
     enableMagnetism = false,
     onClick,
-    index = 0
+    index = 0,
+    enableEntrance = true
 }) => {
         const cardRef = useRef<HTMLDivElement>(null);
         const particlesRef = useRef<HTMLDivElement[]>([]);
@@ -358,15 +361,19 @@ const ParticleCard: React.FC<{
             };
         }, [animateParticles, clearAllParticles, disableAnimations, enableTilt, enableMagnetism, clickEffect, glowColor, onClick]);
 
+        const animationProps = enableEntrance ? {
+            initial: { opacity: 0, y: 50 },
+            whileInView: { opacity: 1, y: 0 },
+            viewport: { once: true, margin: "-50px" },
+            transition: { duration: 0.5, delay: index * 0.1, ease: "easeOut" }
+        } : {};
+
         return (
             <motion.div
                 ref={cardRef}
                 className={`${className} relative overflow-hidden`}
                 style={{ ...style, position: 'relative', overflow: 'hidden' }}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
+                {...animationProps}
             >
                 {children}
             </motion.div>
@@ -554,7 +561,8 @@ const MagicBento: React.FC<BentoProps> = ({
     cards = defaultCardData,
     isLoading = false, // New: Loading state
     hideText = false, // New: Hide text content
-    onCardClick // New: Click handler
+    onCardClick, // New: Click handler
+    enableEntrance = true // New: Prop
 }) => {
     const gridRef = useRef<HTMLDivElement>(null);
     const isMobile = useMobileDetection();
@@ -800,21 +808,27 @@ const MagicBento: React.FC<BentoProps> = ({
                                     enableMagnetism={enableMagnetism}
                                     onClick={() => onCardClick?.(index)}
                                     index={index}
+                                    enableEntrance={enableEntrance}
                                 >
                                     {content}
                                 </ParticleCard>
                             );
                         }
 
+                        // Fallback non-star card
+                        const animationProps = enableEntrance ? {
+                            initial: { opacity: 0, y: 50 },
+                            whileInView: { opacity: 1, y: 0 },
+                            viewport: { once: true, margin: "-50px" },
+                            transition: { duration: 0.5, delay: index * 0.1, ease: "easeOut" }
+                        } : {};
+
                         return (
                             <motion.div
                                 key={index}
                                 className={baseClassName}
                                 style={cardStyle}
-                                initial={{ opacity: 0, y: 50 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, margin: "-50px" }}
-                                transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
+                                {...animationProps}
                                 ref={el => {
                                     if (!el) return;
 

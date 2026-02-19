@@ -106,6 +106,7 @@ export default function GalleryPage() {
                     isLoading={isLoading} // Pass loading state
                     hideText={true} // Hide text as requested
                     onCardClick={(index) => setSelectedImage(galleryImages[index].src)}
+                    enableEntrance={false} // Disable entrance animation as requested
                 />
             </section>
 
