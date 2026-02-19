@@ -6,11 +6,12 @@ import { Menu, X } from "lucide-react"
 import Image from "next/image"
 
 const navLinks = [
-  { label: "Inicio", href: "#inicio" },
-  { label: "Centros de Eventos", href: "#centros" },
-  { label: "Servicios", href: "#servicios" },
-  { label: "Testimonios", href: "#testimonios" },
-  { label: "Cotizar", href: "#cotizar" },
+  { label: "Inicio", href: "/#inicio" },
+  { label: "Centros de Eventos", href: "/#centros" },
+  { label: "Servicios", href: "/#servicios" },
+  { label: "Galeria", href: "/galeria" },
+  { label: "Testimonios", href: "/#testimonios" },
+  { label: "Cotizar", href: "/#cotizar" },
 ]
 
 export function Navbar() {
@@ -30,8 +31,8 @@ export function Navbar() {
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-            ? "bg-background/90 backdrop-blur-lg border-b border-gold/20 shadow-lg shadow-background/10 py-2 lg:py-4"
-            : "bg-transparent py-4 lg:py-6"
+          ? "bg-background/90 backdrop-blur-lg border-b border-gold/20 shadow-lg shadow-background/10 py-2 lg:py-4"
+          : "bg-transparent py-4 lg:py-6"
           }`}
       >
         <div className="mx-auto max-w-7xl flex items-center justify-between px-6 lg:px-8">

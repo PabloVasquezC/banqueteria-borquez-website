@@ -103,20 +103,23 @@ export function Footer() {
           <p className="text-xs text-muted-foreground/60">
             {"© 2026 Banqueteria Borquez. Todos los derechos reservados."}
           </p>
-          <div className="flex gap-6">
-            <a
-              href="#"
-              className="text-xs text-muted-foreground/60 transition-colors hover:text-gold"
-            >
-              Privacidad
+          <nav className="flex flex-col gap-4 text-sm text-muted-foreground/80 md:flex-row md:gap-8">
+            <a href="/#inicio" className="transition-colors hover:text-gold">
+              Inicio
             </a>
-            <a
-              href="#"
-              className="text-xs text-muted-foreground/60 transition-colors hover:text-gold"
-            >
-              {"Terminos y Condiciones"}
+            <a href="/#centros" className="transition-colors hover:text-gold">
+              Centros de Eventos
             </a>
-          </div>
+            <a href="/#servicios" className="transition-colors hover:text-gold">
+              Servicios
+            </a>
+            <a href="/galeria" className="transition-colors hover:text-gold">
+              Galeria
+            </a>
+            <a href="/#testimonios" className="transition-colors hover:text-gold">
+              Testimonios
+            </a>
+          </nav>
         </div>
       </div>
 

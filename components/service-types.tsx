@@ -61,7 +61,7 @@ export function ServiceTypes() {
                     {service.description}
                   </p>
                   <a
-                    href="#cotizar"
+                    href="/#cotizar"
                     className="mt-6 inline-flex w-fit items-center border-b border-gold pb-1 text-xs uppercase tracking-[0.2em] text-gold transition-all duration-300 hover:border-gold-light hover:text-gold-light opacity-0 transform translate-y-4 transition-all duration-500 delay-100 group-hover:opacity-100 group-hover:translate-y-0"
                   >
                     Quiero Cotizar
