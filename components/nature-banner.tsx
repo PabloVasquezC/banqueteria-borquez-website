@@ -5,13 +5,11 @@ import Image from "next/image"
 
 export function NatureBanner() {
   return (
-    <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden">
-      <Image
-        src="/images/nature-surprise.jpg"
-        alt="Eventos en la naturaleza"
-        fill
-        className="object-cover"
-      />
+    <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden bg-fixed bg-center bg-cover bg-no-repeat"
+      style={{
+        backgroundImage: "url('/images/nature-surprise.jpg')"
+      }}
+    >
       <div className="absolute inset-0 bg-background/60" />
 
       <motion.div
