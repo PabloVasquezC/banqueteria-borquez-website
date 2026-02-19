@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 export interface BentoCardProps {
     color?: string;
@@ -127,6 +128,7 @@ const ParticleCard: React.FC<{
     clickEffect?: boolean;
     enableMagnetism?: boolean;
     onClick?: () => void;
+    index?: number;
 }> = ({
     children,
     className = '',
@@ -137,7 +139,8 @@ const ParticleCard: React.FC<{
     enableTilt = true,
     clickEffect = false,
     enableMagnetism = false,
-    onClick
+    onClick,
+    index = 0
 }) => {
         const cardRef = useRef<HTMLDivElement>(null);
         const particlesRef = useRef<HTMLDivElement[]>([]);
@@ -356,13 +359,17 @@ const ParticleCard: React.FC<{
         }, [animateParticles, clearAllParticles, disableAnimations, enableTilt, enableMagnetism, clickEffect, glowColor, onClick]);
 
         return (
-            <div
+            <motion.div
                 ref={cardRef}
                 className={`${className} relative overflow-hidden`}
                 style={{ ...style, position: 'relative', overflow: 'hidden' }}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
             >
                 {children}
-            </div>
+            </motion.div>
         );
     };
 
@@ -792,6 +799,7 @@ const MagicBento: React.FC<BentoProps> = ({
                                     clickEffect={clickEffect}
                                     enableMagnetism={enableMagnetism}
                                     onClick={() => onCardClick?.(index)}
+                                    index={index}
                                 >
                                     {content}
                                 </ParticleCard>
@@ -799,10 +807,14 @@ const MagicBento: React.FC<BentoProps> = ({
                         }
 
                         return (
-                            <div
+                            <motion.div
                                 key={index}
                                 className={baseClassName}
                                 style={cardStyle}
+                                initial={{ opacity: 0, y: 50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-50px" }}
+                                transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
                                 ref={el => {
                                     if (!el) return;
 
@@ -915,7 +927,7 @@ const MagicBento: React.FC<BentoProps> = ({
                                 }}
                             >
                                 {content}
-                            </div>
+                            </motion.div>
                         );
                     })}
                 </div>
