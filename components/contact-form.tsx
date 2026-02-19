@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import { useState } from "react"
 import { Send } from "lucide-react"
+import { fadeIn } from "@/lib/animation-utils"
 
 export function ContactForm() {
   const [submitted, setSubmitted] = useState(false)
@@ -19,10 +20,10 @@ export function ContactForm() {
 
       <div className="relative z-10 mx-auto max-w-3xl px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          variants={fadeIn}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
           className="mb-12 text-center"
         >
           <span className="text-xs uppercase tracking-[0.4em] text-gold/70">
@@ -38,10 +39,10 @@ export function ContactForm() {
         </motion.div>
 
         <motion.form
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          variants={fadeIn}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
           onSubmit={handleSubmit}
           className="space-y-6"
         >
@@ -57,7 +58,7 @@ export function ContactForm() {
                 id="nombre"
                 type="text"
                 required
-                className="w-full border-b border-border bg-transparent px-0 py-3 text-foreground transition-colors duration-300 placeholder:text-muted-foreground/50 focus:border-gold focus:outline-none"
+                className="w-full border-b border-border bg-transparent px-0 py-3 text-foreground transition-colors duration-300 placeholder:text-muted-foreground/50 focus:border-gold focus:outline-none focus:bg-white/5"
                 placeholder="Tu nombre"
               />
             </div>
@@ -72,7 +73,7 @@ export function ContactForm() {
                 id="email"
                 type="email"
                 required
-                className="w-full border-b border-border bg-transparent px-0 py-3 text-foreground transition-colors duration-300 placeholder:text-muted-foreground/50 focus:border-gold focus:outline-none"
+                className="w-full border-b border-border bg-transparent px-0 py-3 text-foreground transition-colors duration-300 placeholder:text-muted-foreground/50 focus:border-gold focus:outline-none focus:bg-white/5"
                 placeholder="correo@ejemplo.com"
               />
             </div>
@@ -90,7 +91,7 @@ export function ContactForm() {
                 id="telefono"
                 type="tel"
                 required
-                className="w-full border-b border-border bg-transparent px-0 py-3 text-foreground transition-colors duration-300 placeholder:text-muted-foreground/50 focus:border-gold focus:outline-none"
+                className="w-full border-b border-border bg-transparent px-0 py-3 text-foreground transition-colors duration-300 placeholder:text-muted-foreground/50 focus:border-gold focus:outline-none focus:bg-white/5"
                 placeholder="9 digitos"
               />
             </div>
@@ -105,7 +106,7 @@ export function ContactForm() {
                 id="fecha"
                 type="date"
                 required
-                className="w-full border-b border-border bg-transparent px-0 py-3 text-foreground transition-colors duration-300 focus:border-gold focus:outline-none [color-scheme:dark]"
+                className="w-full border-b border-border bg-transparent px-0 py-3 text-foreground transition-colors duration-300 focus:border-gold focus:outline-none focus:bg-white/5 [color-scheme:dark]"
               />
             </div>
           </div>
@@ -121,7 +122,7 @@ export function ContactForm() {
               <select
                 id="tipo"
                 required
-                className="w-full border-b border-border bg-transparent px-0 py-3 text-foreground transition-colors duration-300 focus:border-gold focus:outline-none"
+                className="w-full border-b border-border bg-transparent px-0 py-3 text-foreground transition-colors duration-300 focus:border-gold focus:outline-none focus:bg-white/5"
               >
                 <option value="" className="bg-background text-foreground">Selecciona...</option>
                 <option value="matrimonio" className="bg-background text-foreground">Matrimonio</option>
@@ -142,7 +143,7 @@ export function ContactForm() {
                 type="number"
                 min={80}
                 required
-                className="w-full border-b border-border bg-transparent px-0 py-3 text-foreground transition-colors duration-300 placeholder:text-muted-foreground/50 focus:border-gold focus:outline-none"
+                className="w-full border-b border-border bg-transparent px-0 py-3 text-foreground transition-colors duration-300 placeholder:text-muted-foreground/50 focus:border-gold focus:outline-none focus:bg-white/5"
                 placeholder="80"
               />
             </div>
@@ -158,7 +159,7 @@ export function ContactForm() {
             <textarea
               id="consultas"
               rows={4}
-              className="w-full resize-none border-b border-border bg-transparent px-0 py-3 text-foreground transition-colors duration-300 placeholder:text-muted-foreground/50 focus:border-gold focus:outline-none"
+              className="w-full resize-none border-b border-border bg-transparent px-0 py-3 text-foreground transition-colors duration-300 placeholder:text-muted-foreground/50 focus:border-gold focus:outline-none focus:bg-white/5"
               placeholder="Cuentanos sobre tu evento..."
             />
           </div>

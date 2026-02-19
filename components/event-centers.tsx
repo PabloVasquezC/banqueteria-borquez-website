@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import { MapPin } from "lucide-react"
 import { useRef } from "react"
+import { staggerContainer, slideUp, fadeIn } from "@/lib/animation-utils"
 
 const venues = [
   {
@@ -38,10 +39,10 @@ export function EventCenters() {
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          variants={fadeIn}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
           className="mb-16 text-center"
         >
           <span className="text-xs uppercase tracking-[0.4em] text-gold/70">
@@ -57,7 +58,11 @@ export function EventCenters() {
         </motion.div>
 
         {/* Venues horizontal scroll */}
-        <div
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
           ref={scrollRef}
           className="flex gap-6 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-hide"
           style={{ scrollbarWidth: "none" }}
@@ -65,10 +70,7 @@ export function EventCenters() {
           {venues.map((venue, i) => (
             <motion.div
               key={venue.name}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.15 }}
+              variants={slideUp}
               className="group relative min-w-[280px] flex-1 snap-center overflow-hidden md:min-w-[320px]"
             >
               <div className="relative aspect-[3/4] overflow-hidden">
@@ -95,7 +97,7 @@ export function EventCenters() {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         <p className="mt-4 text-center text-xs uppercase tracking-widest text-muted-foreground">
           {"Desliza para ver mas"}

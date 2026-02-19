@@ -10,6 +10,7 @@ import {
   Lightbulb,
 } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
+import { staggerContainer, slideUp, fadeIn } from "@/lib/animation-utils"
 
 interface ServiceItem {
   icon: LucideIcon
@@ -52,15 +53,28 @@ const serviceItems: ServiceItem[] = [
 
 export function ServicesGrid() {
   return (
-    <section id="servicios" className="relative py-24 lg:py-32">
+    <section id="servicios" className="relative py-24 lg:py-32 overflow-hidden">
       <div className="absolute inset-0 bg-secondary/20" />
+      {/* Subtle animated background element */}
+      <motion.div
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.5, 0.3],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+        className="absolute top-0 right-0 -mt-20 -mr-20 h-96 w-96 rounded-full bg-gold/10 blur-3xl"
+      />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          variants={fadeIn}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
           className="mb-16 text-center"
         >
           <span className="text-xs uppercase tracking-[0.4em] text-gold/70">
@@ -72,33 +86,35 @@ export function ServicesGrid() {
           <div className="mx-auto mt-6 h-px w-16 bg-gold/40" />
         </motion.div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+        >
           {serviceItems.map((item, i) => (
             <motion.div
               key={item.label}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="group relative border border-border/50 bg-card/50 p-8 backdrop-blur-sm transition-all duration-500 hover:border-gold/30 hover:bg-card"
+              variants={slideUp}
+              className="group relative border border-border/50 bg-card/50 p-8 backdrop-blur-sm transition-all duration-500 hover:border-gold/50 hover:bg-card hover:-translate-y-2 hover:shadow-xl hover:shadow-gold/10"
             >
               {/* Top gold line on hover */}
               <div className="absolute top-0 left-0 h-px w-0 bg-gold transition-all duration-500 group-hover:w-full" />
 
-              <item.icon
-                size={32}
-                strokeWidth={1}
-                className="text-gold transition-transform duration-500 group-hover:scale-110"
-              />
-              <h3 className="mt-4 font-serif text-lg text-foreground">
+              <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-full bg-gold/10 text-gold transition-all duration-500 group-hover:bg-gold group-hover:text-primary-foreground">
+                <item.icon size={24} strokeWidth={1.5} />
+              </div>
+
+              <h3 className="mb-3 font-serif text-xl text-foreground group-hover:text-gold transition-colors">
                 {item.label}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              <p className="text-sm leading-relaxed text-muted-foreground">
                 {item.description}
               </p>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )
