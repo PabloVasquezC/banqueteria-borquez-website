@@ -1,12 +1,9 @@
 "use client"
 
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import Image from "next/image"
-import { X, ZoomIn } from "lucide-react"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
-import { fadeIn, staggerContainer } from "@/lib/animation-utils"
+import MagicBento, { BentoCardProps } from "@/components/MagicBento"
+import Image from "next/image"
 
 // Full list of new high-res images
 const galleryImages = [
@@ -52,7 +49,15 @@ const galleryImages = [
 ]
 
 export default function GalleryPage() {
-    const [selectedImage, setSelectedImage] = useState<string | null>(null)
+    // Map existing images to MagicBento format
+    const galleryCards: BentoCardProps[] = galleryImages.map((img, index) => ({
+        title: `Evento ${index + 1}`,
+        description: 'Banquetería y Eventos Borquez',
+        label: 'Galería',
+        img: img.src,
+        span: img.span,
+        textAutoHide: true,
+    }))
 
     return (
         <main className="min-h-screen bg-background">
@@ -78,76 +83,24 @@ export default function GalleryPage() {
                 </div>
             </section>
 
-            <section className="py-24 px-6 lg:px-8">
-                <motion.div
-                    variants={staggerContainer}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-100px" }}
-                    className="mx-auto max-w-7xl grid grid-cols-1 gap-4 md:grid-cols-4 md:auto-rows-[250px]"
-                >
-                    {galleryImages.map((image, i) => (
-                        <motion.div
-                            key={i}
-                            variants={fadeIn}
-                            whileHover={{ scale: 1.02, zIndex: 10 }}
-                            className={`group relative overflow-hidden rounded-sm cursor-pointer ${image.span} shadow-md`}
-                            onClick={() => setSelectedImage(image.src)}
-                        >
-                            <Image
-                                src={image.src}
-                                alt={image.alt}
-                                fill
-                                className="object-cover transition-transform duration-700 group-hover:scale-110"
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            />
-                            <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/20" />
-                            <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                                <div className="rounded-full bg-white/10 p-3 backdrop-blur-sm border border-white/20">
-                                    <ZoomIn className="text-white" size={24} />
-                                </div>
-                            </div>
-                        </motion.div>
-                    ))}
-                </motion.div>
+            <section className="py-24 px-4 lg:px-8">
+                <MagicBento
+                    cards={galleryCards}
+                    textAutoHide={true}
+                    enableStars={false} // Disable stars for cleaner gallery look
+                    enableSpotlight={true}
+                    enableBorderGlow={true}
+                    enableTilt={true}
+                    enableMagnetism={false} // Click effect can stay
+                    clickEffect={true}
+                    spotlightRadius={300}
+                    particleCount={6}
+                    glowColor="234, 179, 8" // Gold
+                    disableAnimations={false}
+                />
             </section>
 
             <Footer />
-
-            {/* Lightbox Modal */}
-            <AnimatePresence>
-                {selectedImage && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4 backdrop-blur-md"
-                        onClick={() => setSelectedImage(null)}
-                    >
-                        <button
-                            className="absolute top-4 right-4 text-white/50 hover:text-white transition-colors p-2"
-                            onClick={() => setSelectedImage(null)}
-                        >
-                            <X size={32} />
-                        </button>
-                        <motion.div
-                            initial={{ scale: 0.9, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0.9, opacity: 0 }}
-                            className="relative h-[85vh] w-full max-w-6xl overflow-hidden rounded-md shadow-2xl"
-                            onClick={(e) => e.stopPropagation()}
-                        >
-                            <Image
-                                src={selectedImage}
-                                alt="Galeria full screen"
-                                fill
-                                className="object-contain"
-                                quality={100}
-                            />
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
         </main>
     )
 }

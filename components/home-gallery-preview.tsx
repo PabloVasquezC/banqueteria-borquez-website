@@ -3,8 +3,43 @@
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { ArrowRight } from "lucide-react"
+import MagicBento from "@/components/MagicBento"
 
 export function HomeGalleryPreview() {
+    const previewCards = [
+        {
+            title: 'Matrimonios',
+            description: 'Creamos la boda de tus sueños',
+            label: 'Banquetería',
+            img: '/images/DSC04862.jpg',
+            span: 'md:col-span-2 md:row-span-2'
+        },
+        {
+            title: 'Corporativos',
+            description: 'Eventos empresariales de alto nivel',
+            label: 'Empresas',
+            img: '/images/hero-1.jpg'
+        },
+        {
+            title: 'Cenas Privadas',
+            description: 'Experiencias gastronómicas exclusivas',
+            label: 'Exclusivo',
+            img: '/images/DSC04913.jpg'
+        },
+        {
+            title: 'Graduaciones',
+            description: 'Celebra tus logros con estilo',
+            label: 'Fiestas',
+            img: '/images/DSC04901.jpg'
+        },
+        {
+            title: 'Cumpleaños',
+            description: 'Momentos inolvidables con amigos',
+            label: 'Celebración',
+            img: '/images/DSC04865.jpg'
+        }
+    ];
+
     return (
         <section className="relative py-24 lg:py-32 bg-secondary/10">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -42,27 +77,22 @@ export function HomeGalleryPreview() {
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
-                        className="relative grid grid-cols-2 gap-4"
+                        className="relative w-full"
                     >
-                        <div className="space-y-4 pt-12">
-                            <div className="relative aspect-[3/4] overflow-hidden rounded-sm shadow-lg">
-                                <Image src="/images/DSC04862.jpg" alt="Preview 1" fill className="object-cover hover:scale-105 transition-transform duration-700" />
-                            </div>
-                            <div className="relative aspect-[4/3] overflow-hidden rounded-sm shadow-lg">
-                                <Image src="/images/DSC04913.jpg" alt="Preview 2" fill className="object-cover hover:scale-105 transition-transform duration-700" />
-                            </div>
-                        </div>
-                        <div className="space-y-4">
-                            <div className="relative aspect-[4/3] overflow-hidden rounded-sm shadow-lg">
-                                <Image src="/images/DSC04901.jpg" alt="Preview 3" fill className="object-cover hover:scale-105 transition-transform duration-700" />
-                            </div>
-                            <div className="relative aspect-[3/4] overflow-hidden rounded-sm shadow-lg">
-                                <Image src="/images/DSC04865.jpg" alt="Preview 4" fill className="object-cover hover:scale-105 transition-transform duration-700" />
-                            </div>
-                        </div>
-
-                        {/* Decorative circle */}
-                        <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gold/5 rounded-full blur-3xl" />
+                        <MagicBento
+                            cards={previewCards}
+                            textAutoHide={true}
+                            enableStars
+                            enableSpotlight
+                            enableBorderGlow={true}
+                            enableTilt
+                            enableMagnetism={false}
+                            clickEffect
+                            spotlightRadius={290}
+                            particleCount={12}
+                            glowColor="234, 179, 8" // Changed to Gold to match theme (original was purple 132, 0, 255)
+                            disableAnimations={false}
+                        />
                     </motion.div>
 
                 </div>
