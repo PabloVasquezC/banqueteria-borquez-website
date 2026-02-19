@@ -1,5 +1,8 @@
 "use client"
 
+import { useState, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { X } from "lucide-react"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import MagicBento, { BentoCardProps } from "@/components/MagicBento"
@@ -41,6 +44,17 @@ const galleryImages = [
 ]
 
 export default function GalleryPage() {
+    const [isLoading, setIsLoading] = useState(true);
+    const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+    useEffect(() => {
+        // Simulate loading delay for skeleton effect
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 2000);
+        return () => clearTimeout(timer);
+    }, []);
+
     // Map existing images to MagicBento format
     const galleryCards: BentoCardProps[] = galleryImages.map((img, index) => ({
         title: `Evento ${index + 1}`,
@@ -79,7 +93,7 @@ export default function GalleryPage() {
                 <MagicBento
                     cards={galleryCards}
                     textAutoHide={true}
-                    enableStars={false} // Disable stars for cleaner gallery look
+                    enableStars={true} // Enabled stars as requested
                     enableSpotlight={true}
                     enableBorderGlow={true}
                     enableTilt={true}
@@ -89,10 +103,54 @@ export default function GalleryPage() {
                     particleCount={6}
                     glowColor="234, 179, 8" // Gold
                     disableAnimations={false}
+                    isLoading={isLoading} // Pass loading state
+                    hideText={true} // Hide text as requested
+                    onCardClick={(index) => setSelectedImage(galleryImages[index].src)}
                 />
             </section>
 
             <Footer />
+
+            {/* Lightbox Modal */}
+            <AnimatePresence>
+                {selectedImage && (
+                    <motion.div
+                        initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
+                        animate={{ opacity: 1, backdropFilter: "blur(8px)" }}
+                        exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
+                        transition={{ duration: 0.4, ease: "easeInOut" }}
+                        className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+                        onClick={() => setSelectedImage(null)}
+                    >
+                        {/* Close Button */}
+                        <button
+                            className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors p-2 z-50 bg-black/20 rounded-full hover:bg-black/40"
+                            onClick={() => setSelectedImage(null)}
+                        >
+                            <X size={32} />
+                        </button>
+
+                        <motion.div
+                            layoutId={selectedImage}
+                            initial={{ scale: 0.8, opacity: 0, y: 20 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            exit={{ scale: 0.8, opacity: 0, y: 20 }}
+                            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                            className="relative h-[85vh] w-full max-w-6xl overflow-hidden rounded-lg shadow-2xl ring-1 ring-white/10"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <Image
+                                src={selectedImage}
+                                alt="Galeria full screen"
+                                fill
+                                className="object-contain"
+                                quality={100}
+                                priority
+                            />
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </main>
     )
 }
