@@ -9,19 +9,19 @@ const services = [
     title: "Matrimonios",
     description:
       "Creamos la atmosfera perfecta para el dia mas importante de tu vida, cuidando cada detalle con elegancia natural.",
-    image: "/images/matrimonios.jpg",
+    image: "/images/DSC04986.jpg",
   },
   {
     title: "Empresas",
     description:
       "Servicios corporativos de alto nivel. Lanzamientos, cenas de gala y eventos institucionales con un sello de distincion.",
-    image: "/images/empresas.jpg",
+    image: "/images/hero4.jpg",
   },
   {
     title: "Otros Eventos",
     description:
       "Celebraciones privadas, aniversarios y encuentros exclusivos. Transformamos cualquier ocasion en un recuerdo inolvidable.",
-    image: "/images/otros.jpg",
+    image: "/images/DSC05145.jpg",
   },
 ]
 
