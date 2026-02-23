@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Quote } from "lucide-react"
+import { staggerContainer, slideUp, fadeIn } from "@/lib/animation-utils"
 
 const testimonials = [
   {
@@ -21,10 +22,10 @@ export function Testimonials() {
     <section id="testimonios" className="relative py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          variants={fadeIn}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
           className="mb-16 text-center"
         >
           <span className="text-xs uppercase tracking-[0.4em] text-gold/70">
@@ -36,15 +37,18 @@ export function Testimonials() {
           <div className="mx-auto mt-6 h-px w-16 bg-gold/40" />
         </motion.div>
 
-        <div className="grid gap-8 md:grid-cols-2">
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          className="grid gap-8 md:grid-cols-2"
+        >
           {testimonials.map((item, i) => (
             <motion.div
               key={item.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: i * 0.2 }}
-              className="relative border border-border/50 bg-card/40 p-8 backdrop-blur-sm lg:p-10"
+              variants={slideUp}
+              className="relative border border-border/50 bg-card/40 p-8 backdrop-blur-sm lg:p-10 transition-colors duration-300 hover:bg-card/60"
             >
               {/* Gold corner accents */}
               <div className="absolute top-0 left-0 h-8 w-px bg-gold/40" />
@@ -67,7 +71,7 @@ export function Testimonials() {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

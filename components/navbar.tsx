@@ -3,13 +3,15 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X } from "lucide-react"
+import Image from "next/image"
 
 const navLinks = [
-  { label: "Inicio", href: "#inicio" },
-  { label: "Centros de Eventos", href: "#centros" },
-  { label: "Servicios", href: "#servicios" },
-  { label: "Testimonios", href: "#testimonios" },
-  { label: "Cotizar", href: "#cotizar" },
+  { label: "Inicio", href: "/#inicio" },
+  { label: "Centros de Eventos", href: "/#centros" },
+  { label: "Servicios", href: "/#servicios" },
+  { label: "Galeria", href: "/galeria" },
+  { label: "Testimonios", href: "/#testimonios" },
+  { label: "Cotizar", href: "/#cotizar" },
 ]
 
 export function Navbar() {
@@ -27,33 +29,39 @@ export function Navbar() {
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? "bg-background/95 backdrop-blur-md border-b border-gold/20 shadow-lg shadow-background/50"
-            : "bg-transparent"
-        }`}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
+          ? "bg-background/90 backdrop-blur-lg border-b border-gold/20 shadow-lg shadow-background/10 py-2 lg:py-4"
+          : "bg-transparent py-4 lg:py-6"
+          }`}
       >
-        <div className="mx-auto max-w-7xl flex items-center justify-between px-6 py-4 lg:px-8">
-          <a href="#inicio" className="flex flex-col items-start">
-            <span className="font-serif text-xl tracking-wider text-gold lg:text-2xl">
-              Borquez
-            </span>
-            <span className="text-[10px] uppercase tracking-[0.3em] text-gold-light/70 lg:text-xs">
-              Banqueteria
-            </span>
+        <div className="mx-auto max-w-7xl flex items-center justify-between px-6 lg:px-8">
+          <a href="#inicio" className="flex items-center gap-2 group z-50 relative">
+            {/* Logo Placeholder */}
+            {/* <div className="h-10 w-10 relative">
+               <Image src="/images/logo.png" alt="Logo" fill className="object-contain" />
+             </div> */}
+            <div className="flex flex-col items-start transition-transform duration-300 group-hover:scale-105">
+              <span className="font-serif text-xl tracking-wider text-gold lg:text-2xl font-bold">
+                B<span className="text-gold/80 font-normal">orquez</span>
+              </span>
+              <span className="text-[8px] uppercase tracking-[0.3em] text-gold-light/70 lg:text-[10px]">
+                Banquetería
+              </span>
+            </div>
           </a>
 
           {/* Desktop */}
           <ul className="hidden items-center gap-8 lg:flex">
             {navLinks.map((link) => (
-              <li key={link.href}>
+              <li key={link.href} className="relative group">
                 <a
                   href={link.href}
                   className="text-sm uppercase tracking-widest text-foreground/80 transition-colors duration-300 hover:text-gold"
                 >
                   {link.label}
                 </a>
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold transition-all duration-300 group-hover:w-full" />
               </li>
             ))}
           </ul>
@@ -68,7 +76,7 @@ export function Navbar() {
           {/* Mobile toggle */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="text-gold lg:hidden"
+            className="text-gold lg:hidden z-50 relative p-2"
             aria-label={mobileOpen ? "Cerrar menu" : "Abrir menu"}
           >
             {mobileOpen ? <X size={28} /> : <Menu size={28} />}
@@ -80,25 +88,39 @@ export function Navbar() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 bg-background/98 backdrop-blur-xl"
+            initial={{ opacity: 0, x: "100%" }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: "100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 bg-background/98 backdrop-blur-xl lg:hidden"
           >
+            <div className="absolute inset-0 bg-gold/5 pointer-events-none" />
+
             {navLinks.map((link, i) => (
               <motion.a
                 key={link.href}
                 href={link.href}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
+                transition={{ delay: 0.1 + i * 0.1 }}
                 onClick={() => setMobileOpen(false)}
-                className="font-serif text-2xl text-gold transition-colors hover:text-gold-light"
+                className="font-serif text-3xl text-gold transition-colors hover:text-gold-light relative group"
               >
                 {link.label}
+                <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-px bg-gold/50 transition-all duration-300 group-hover:w-full" />
               </motion.a>
             ))}
+
+            <motion.a
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              href="#cotizar"
+              onClick={() => setMobileOpen(false)}
+              className="mt-8 rounded-none border border-gold bg-transparent px-8 py-3 text-sm uppercase tracking-widest text-gold transition-all hover:bg-gold hover:text-primary-foreground"
+            >
+              Cotizar Ahora
+            </motion.a>
           </motion.div>
         )}
       </AnimatePresence>

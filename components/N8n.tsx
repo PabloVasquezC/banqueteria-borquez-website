@@ -37,5 +37,15 @@ export function N8nChat() {
     });
   }, []);
 
-  return null;
+  return (
+    <div className="fixed bottom-24 right-6 z-40 hidden md:block">
+      <div className="relative rounded-lg border border-gold/20 bg-background/90 p-4 shadow-lg backdrop-blur-md">
+        <p className="text-xs font-medium text-foreground">
+          ¿Tienes dudas? <span className="text-gold">¡Hablemos!</span>
+        </p>
+        {/* Triangle arrow pointing down */}
+        <div className="absolute -bottom-2 right-6 h-4 w-4 rotate-45 border-b border-r border-gold/20 bg-background/90"></div>
+      </div>
+    </div>
+  );
 }

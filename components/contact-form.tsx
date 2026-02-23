@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion"
 import { useState } from "react"
 import { Send, FileDown, CheckCircle2 } from "lucide-react"
+import { fadeIn } from "@/lib/animation-utils"
 import { generarCotizacionPDF } from "@/lib/generarCotizacionPDF"
 
 interface FormData {
@@ -59,10 +60,10 @@ export function ContactForm() {
 
       <div className="relative z-10 mx-auto max-w-3xl px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          variants={fadeIn}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
           className="mb-12 text-center"
         >
           <span className="text-xs uppercase tracking-[0.4em] text-gold/70">
@@ -78,10 +79,10 @@ export function ContactForm() {
         </motion.div>
 
         <motion.form
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          variants={fadeIn}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
           onSubmit={handleSubmit}
           className="space-y-6"
         >

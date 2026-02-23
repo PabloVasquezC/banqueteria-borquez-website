@@ -1,7 +1,9 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { MapPin } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
+import { MapPin, ArrowUp } from "lucide-react"
+import { useState, useEffect } from "react"
+import { fadeIn } from "@/lib/animation-utils"
 
 const navLinks = [
   { label: "Inicio", href: "#inicio" },
@@ -11,16 +13,31 @@ const navLinks = [
 ]
 
 export function Footer() {
+  const [showScrollTop, setShowScrollTop] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 400)
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
+
   return (
     <footer className="relative border-t border-border/50 bg-secondary/30">
       <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-20">
         <div className="grid gap-12 md:grid-cols-3">
           {/* Brand */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            variants={fadeIn}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            className="mb-4"
           >
             <div className="mb-4">
               <span className="font-serif text-2xl tracking-wider text-gold">
@@ -38,10 +55,11 @@ export function Footer() {
 
           {/* Navigation */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            variants={fadeIn}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.15 }}
+            transition={{ delay: 0.2 }}
           >
             <h4 className="mb-6 text-xs uppercase tracking-[0.3em] text-gold">
               Navegacion
@@ -62,10 +80,11 @@ export function Footer() {
 
           {/* Contact */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            variants={fadeIn}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ delay: 0.4 }}
           >
             <h4 className="mb-6 text-xs uppercase tracking-[0.3em] text-gold">
               Contacto
@@ -84,22 +103,41 @@ export function Footer() {
           <p className="text-xs text-muted-foreground/60">
             {"© 2026 Banqueteria Borquez. Todos los derechos reservados."}
           </p>
-          <div className="flex gap-6">
-            <a
-              href="#"
-              className="text-xs text-muted-foreground/60 transition-colors hover:text-gold"
-            >
-              Privacidad
+          <nav className="flex flex-col gap-4 text-sm text-muted-foreground/80 md:flex-row md:gap-8">
+            <a href="/#inicio" className="transition-colors hover:text-gold">
+              Inicio
             </a>
-            <a
-              href="#"
-              className="text-xs text-muted-foreground/60 transition-colors hover:text-gold"
-            >
-              {"Terminos y Condiciones"}
+            <a href="/#centros" className="transition-colors hover:text-gold">
+              Centros de Eventos
             </a>
-          </div>
+            <a href="/#servicios" className="transition-colors hover:text-gold">
+              Servicios
+            </a>
+            <a href="/galeria" className="transition-colors hover:text-gold">
+              Galeria
+            </a>
+            <a href="/#testimonios" className="transition-colors hover:text-gold">
+              Testimonios
+            </a>
+          </nav>
         </div>
       </div>
+
+      {/* Scroll to Top Button */}
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            onClick={scrollToTop}
+            className="fixed bottom-8 left-8 z-40 rounded-full border border-gold/30 bg-background/80 p-3 text-gold shadow-lg backdrop-blur-sm transition-colors hover:bg-gold hover:text-primary-foreground md:bottom-12 md:left-12"
+            aria-label="Volver arriba"
+          >
+            <ArrowUp size={20} />
+          </motion.button>
+        )}
+      </AnimatePresence>
     </footer>
   )
 }

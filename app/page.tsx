@@ -10,6 +10,7 @@ import { Testimonials } from "@/components/testimonials"
 import { ContactForm } from "@/components/contact-form"
 import { Footer } from "@/components/footer"
 import { N8nChat } from "@/components/N8n"
+import { HomeGalleryPreview } from "@/components/home-gallery-preview"
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
       <ServiceTypes />
       <ServicesGrid />
       <NatureBanner />
+      <HomeGalleryPreview />
       <Testimonials />
       <ContactForm />
       <Footer />
