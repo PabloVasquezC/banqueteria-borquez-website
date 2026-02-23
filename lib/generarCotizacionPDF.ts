@@ -8,6 +8,7 @@ export interface DatosCotizacion {
     tipo: string;
     cantidad: string;
     consultas?: string;
+    servicios?: string[];
 }
 
 const TIPO_LABELS: Record<string, string> = {
@@ -144,39 +145,33 @@ export async function generarCotizacionPDF(datos: DatosCotizacion): Promise<void
     y += 20;
 
     // ============================================================
-    // 4. SERVICIOS INCLUIDOS (lista estilizada)
+    // 4. SERVICIOS SOLICITADOS
     // ============================================================
     doc.setFillColor(...lightGray);
     doc.rect(15, y - 5, 180, 7, "F");
     doc.setFont("helvetica", "bold");
     doc.setFontSize(8);
     doc.setTextColor(...accentColor);
-    doc.text("SERVICIOS INCLUIDOS EN COTIZACIÓN", 18, y);
+    doc.text("SERVICIOS SOLICITADOS", 18, y);
 
     doc.setDrawColor(...accentColor);
     doc.line(15, y + 2, 195, y + 2);
 
     y += 10;
 
-    const servicios = [
-        "Coordinación integral del evento",
-        "Servicio de alimentación y catering",
-        "Montaje y decoración de salón",
-        "Personal de servicio calificado",
-        "Vajilla, cristalería y mantelería",
-        "Asesoría personalizada de menú",
-    ];
+    const serviciosSeleccionados = datos.servicios && datos.servicios.length > 0
+        ? datos.servicios
+        : ["Sin servicios especificados"];
 
     doc.setFontSize(9);
     doc.setTextColor(50, 50, 50);
 
-    servicios.forEach((srv, i) => {
-        const col = i < 3 ? 0 : 1;
-        const row = i % 3;
+    serviciosSeleccionados.forEach((srv, i) => {
+        const col = i % 2;
+        const row = Math.floor(i / 2);
         const xPos = col === 0 ? 20 : 110;
         const yPos = y + row * 8;
 
-        // Bullet dorado
         doc.setFillColor(...accentColor);
         doc.circle(xPos - 3, yPos - 2, 1.2, "F");
 
@@ -185,7 +180,7 @@ export async function generarCotizacionPDF(datos: DatosCotizacion): Promise<void
         doc.text(srv, xPos, yPos);
     });
 
-    y += 30;
+    y += Math.ceil(serviciosSeleccionados.length / 2) * 8 + 8;
 
     // ============================================================
     // 5. OBSERVACIONES

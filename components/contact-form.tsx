@@ -6,6 +6,19 @@ import { Send, FileDown, CheckCircle2 } from "lucide-react"
 import { fadeIn } from "@/lib/animation-utils"
 import { generarCotizacionPDF } from "@/lib/generarCotizacionPDF"
 
+const SERVICIOS_DISPONIBLES = [
+  { id: "catering", label: "Catering y alimentación" },
+  { id: "coordinacion", label: "Coordinación integral del evento" },
+  { id: "montaje", label: "Montaje y decoración de salón" },
+  { id: "personal", label: "Personal de servicio" },
+  { id: "vajilla", label: "Vajilla, cristalería y mantelería" },
+  { id: "sonido", label: "Amplificación y sonido" },
+  { id: "iluminacion", label: "Iluminación especial" },
+  { id: "flores", label: "Flores y centros de mesa" },
+  { id: "fotografia", label: "Fotografía y video" },
+  { id: "transporte", label: "Transporte y traslados" },
+] as const
+
 interface FormData {
   nombre: string
   email: string
@@ -14,6 +27,7 @@ interface FormData {
   tipo: string
   cantidad: string
   consultas: string
+  servicios: string[]
 }
 
 const initialForm: FormData = {
@@ -24,6 +38,7 @@ const initialForm: FormData = {
   tipo: "",
   cantidad: "",
   consultas: "",
+  servicios: [],
 }
 
 export function ContactForm() {
@@ -198,6 +213,39 @@ export function ContactForm() {
                 className="w-full border-b border-border bg-transparent px-0 py-3 text-foreground transition-colors duration-300 placeholder:text-muted-foreground/50 focus:border-gold focus:outline-none"
                 placeholder="80"
               />
+            </div>
+          </div>
+
+          {/* Servicios requeridos */}
+          <div>
+            <p className="mb-4 text-xs uppercase tracking-widest text-muted-foreground">
+              Servicios Requeridos
+            </p>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {SERVICIOS_DISPONIBLES.map((srv) => (
+                <label
+                  key={srv.id}
+                  className="flex cursor-pointer items-center gap-3 group"
+                >
+                  <input
+                    type="checkbox"
+                    value={srv.id}
+                    checked={formData.servicios.includes(srv.id)}
+                    onChange={(e) => {
+                      setFormData((prev) => ({
+                        ...prev,
+                        servicios: e.target.checked
+                          ? [...prev.servicios, srv.id]
+                          : prev.servicios.filter((s) => s !== srv.id),
+                      }))
+                    }}
+                    className="h-4 w-4 shrink-0 accent-[hsl(var(--gold,_38_61%_50%))] cursor-pointer"
+                  />
+                  <span className="text-sm text-muted-foreground transition-colors group-hover:text-foreground">
+                    {srv.label}
+                  </span>
+                </label>
+              ))}
             </div>
           </div>
 
