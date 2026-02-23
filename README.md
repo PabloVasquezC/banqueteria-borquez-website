@@ -107,7 +107,7 @@ Sigue estos pasos para ejecutar el proyecto localmente:
 
 Para consultas sobre el desarrollo o el servicio de banquetería:
 
-- **Web:** [borquezbanqueteria.com](https://borquebanqueteria.com)
+- **Web:** [borquezbanqueteria.com](https://borquezbanqueteria.com)
 - **Desarrollador:** Pablo Vásquez C.
 
 ---
