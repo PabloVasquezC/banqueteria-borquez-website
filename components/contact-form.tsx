@@ -1,16 +1,56 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { useState } from "react"
-import { Send } from "lucide-react"
+import { Send, FileDown, CheckCircle2 } from "lucide-react"
+import { generarCotizacionPDF } from "@/lib/generarCotizacionPDF"
+
+interface FormData {
+  nombre: string
+  email: string
+  telefono: string
+  fecha: string
+  tipo: string
+  cantidad: string
+  consultas: string
+}
+
+const initialForm: FormData = {
+  nombre: "",
+  email: "",
+  telefono: "",
+  fecha: "",
+  tipo: "",
+  cantidad: "",
+  consultas: "",
+}
 
 export function ContactForm() {
+  const [formData, setFormData] = useState<FormData>(initialForm)
   const [submitted, setSubmitted] = useState(false)
+  const [generatingPDF, setGeneratingPDF] = useState(false)
+  const [pdfReady, setPdfReady] = useState(false)
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    setFormData((prev) => ({ ...prev, [e.target.id]: e.target.value }))
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setSubmitted(true)
+    setPdfReady(true)
     setTimeout(() => setSubmitted(false), 4000)
+  }
+
+  const handleDescargarPDF = async () => {
+    setGeneratingPDF(true)
+    try {
+      await generarCotizacionPDF(formData)
+    } finally {
+      setGeneratingPDF(false)
+    }
   }
 
   return (
@@ -57,6 +97,8 @@ export function ContactForm() {
                 id="nombre"
                 type="text"
                 required
+                value={formData.nombre}
+                onChange={handleChange}
                 className="w-full border-b border-border bg-transparent px-0 py-3 text-foreground transition-colors duration-300 placeholder:text-muted-foreground/50 focus:border-gold focus:outline-none"
                 placeholder="Tu nombre"
               />
@@ -72,6 +114,8 @@ export function ContactForm() {
                 id="email"
                 type="email"
                 required
+                value={formData.email}
+                onChange={handleChange}
                 className="w-full border-b border-border bg-transparent px-0 py-3 text-foreground transition-colors duration-300 placeholder:text-muted-foreground/50 focus:border-gold focus:outline-none"
                 placeholder="correo@ejemplo.com"
               />
@@ -90,6 +134,8 @@ export function ContactForm() {
                 id="telefono"
                 type="tel"
                 required
+                value={formData.telefono}
+                onChange={handleChange}
                 className="w-full border-b border-border bg-transparent px-0 py-3 text-foreground transition-colors duration-300 placeholder:text-muted-foreground/50 focus:border-gold focus:outline-none"
                 placeholder="9 digitos"
               />
@@ -105,6 +151,8 @@ export function ContactForm() {
                 id="fecha"
                 type="date"
                 required
+                value={formData.fecha}
+                onChange={handleChange}
                 className="w-full border-b border-border bg-transparent px-0 py-3 text-foreground transition-colors duration-300 focus:border-gold focus:outline-none [color-scheme:dark]"
               />
             </div>
@@ -121,6 +169,8 @@ export function ContactForm() {
               <select
                 id="tipo"
                 required
+                value={formData.tipo}
+                onChange={handleChange}
                 className="w-full border-b border-border bg-transparent px-0 py-3 text-foreground transition-colors duration-300 focus:border-gold focus:outline-none"
               >
                 <option value="" className="bg-background text-foreground">Selecciona...</option>
@@ -142,6 +192,8 @@ export function ContactForm() {
                 type="number"
                 min={80}
                 required
+                value={formData.cantidad}
+                onChange={handleChange}
                 className="w-full border-b border-border bg-transparent px-0 py-3 text-foreground transition-colors duration-300 placeholder:text-muted-foreground/50 focus:border-gold focus:outline-none"
                 placeholder="80"
               />
@@ -158,24 +210,73 @@ export function ContactForm() {
             <textarea
               id="consultas"
               rows={4}
+              value={formData.consultas}
+              onChange={handleChange}
               className="w-full resize-none border-b border-border bg-transparent px-0 py-3 text-foreground transition-colors duration-300 placeholder:text-muted-foreground/50 focus:border-gold focus:outline-none"
               placeholder="Cuentanos sobre tu evento..."
             />
           </div>
 
-          <div className="flex justify-center pt-4">
+          {/* Botones de acción */}
+          <div className="flex flex-col items-center gap-4 pt-4 sm:flex-row sm:justify-center">
+            {/* Botón enviar formulario */}
             <button
               type="submit"
               disabled={submitted}
               className="group flex items-center gap-3 border border-gold bg-gold px-10 py-4 text-xs uppercase tracking-[0.3em] text-primary-foreground transition-all duration-300 hover:bg-transparent hover:text-gold disabled:opacity-50"
             >
-              {submitted ? "Enviado" : "Enviar Cotizacion"}
-              <Send
-                size={14}
-                className="transition-transform duration-300 group-hover:translate-x-1"
-              />
+              {submitted ? (
+                <>
+                  <CheckCircle2 size={14} />
+                  Enviado
+                </>
+              ) : (
+                <>
+                  Enviar Cotizacion
+                  <Send size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
+                </>
+              )}
             </button>
+
+            {/* Botón descargar PDF — aparece solo cuando el formulario fue enviado */}
+            <AnimatePresence>
+              {pdfReady && (
+                <motion.button
+                  type="button"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ duration: 0.4 }}
+                  onClick={handleDescargarPDF}
+                  disabled={generatingPDF}
+                  className="group flex items-center gap-3 border border-gold/60 bg-transparent px-10 py-4 text-xs uppercase tracking-[0.3em] text-gold transition-all duration-300 hover:border-gold hover:bg-gold/10 disabled:opacity-50"
+                >
+                  {generatingPDF ? (
+                    "Generando..."
+                  ) : (
+                    <>
+                      Descargar PDF
+                      <FileDown size={14} className="transition-transform duration-300 group-hover:translate-y-0.5" />
+                    </>
+                  )}
+                </motion.button>
+              )}
+            </AnimatePresence>
           </div>
+
+          {/* Nota informativa sobre el PDF */}
+          <AnimatePresence>
+            {pdfReady && (
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="text-center text-xs text-muted-foreground"
+              >
+                ✓ Tu cotización fue enviada. También puedes descargar una copia en PDF.
+              </motion.p>
+            )}
+          </AnimatePresence>
         </motion.form>
       </div>
     </section>
