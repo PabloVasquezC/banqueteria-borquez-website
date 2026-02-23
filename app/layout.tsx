@@ -28,10 +28,20 @@ export const metadata: Metadata = {
     'Borquez',
     'banquetes',
   ],
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'Borquez Banquetería',
+  },
 }
 
 export const viewport: Viewport = {
   themeColor: '#1a1a1a',
+  width: 'device-width',
+  initialScale: 1,
+  minimumScale: 1,
+  viewportFit: 'cover',
 }
 
 export default function RootLayout({
