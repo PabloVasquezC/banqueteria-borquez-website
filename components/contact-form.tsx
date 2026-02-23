@@ -63,7 +63,11 @@ export function ContactForm() {
   const handleDescargarPDF = async () => {
     setGeneratingPDF(true)
     try {
-      await generarCotizacionPDF(formData)
+      // Convertir IDs a labels legibles para el PDF
+      const serviciosConNombre = formData.servicios.map(
+        (id) => SERVICIOS_DISPONIBLES.find((s) => s.id === id)?.label ?? id
+      )
+      await generarCotizacionPDF({ ...formData, servicios: serviciosConNombre })
     } finally {
       setGeneratingPDF(false)
     }
