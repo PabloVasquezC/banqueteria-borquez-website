@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion"
 import { useState } from "react"
-import { Send, FileDown, CheckCircle2 } from "lucide-react"
+import { Send, FileDown, CheckCircle2, AlertCircle, Loader2 } from "lucide-react"
 import { fadeIn } from "@/lib/animation-utils"
 import { generarCotizacionPDF } from "@/lib/generarCotizacionPDF"
 
@@ -44,6 +44,8 @@ const initialForm: FormData = {
 export function ContactForm() {
   const [formData, setFormData] = useState<FormData>(initialForm)
   const [submitted, setSubmitted] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [sendError, setSendError] = useState<string | null>(null)
   const [generatingPDF, setGeneratingPDF] = useState(false)
   const [pdfReady, setPdfReady] = useState(false)
 
@@ -53,11 +55,31 @@ export function ContactForm() {
     setFormData((prev) => ({ ...prev, [e.target.id]: e.target.value }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSubmitted(true)
-    setPdfReady(true)
-    setTimeout(() => setSubmitted(false), 4000)
+    setSending(true)
+    setSendError(null)
+
+    try {
+      const res = await fetch("/api/send-cotizacion", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      })
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        throw new Error(data?.error || "Error al enviar la cotización")
+      }
+
+      setSubmitted(true)
+      setPdfReady(true)
+      setTimeout(() => setSubmitted(false), 5000)
+    } catch (err) {
+      setSendError(err instanceof Error ? err.message : "Error al enviar")
+    } finally {
+      setSending(false)
+    }
   }
 
   const handleDescargarPDF = async () => {
@@ -109,7 +131,7 @@ export function ContactForm() {
             <div>
               <label
                 htmlFor="nombre"
-                className="mb-2 block text-xs uppercase tracking-widest text-muted-foreground"
+                className="mb-2 block text-xm uppercase tracking-widest text-muted-foreground"
               >
                 Nombre Titular
               </label>
@@ -126,7 +148,7 @@ export function ContactForm() {
             <div>
               <label
                 htmlFor="email"
-                className="mb-2 block text-xs uppercase tracking-widest text-muted-foreground"
+                className="mb-2 block text-xm uppercase tracking-widest text-muted-foreground"
               >
                 Email
               </label>
@@ -146,7 +168,7 @@ export function ContactForm() {
             <div>
               <label
                 htmlFor="telefono"
-                className="mb-2 block text-xs uppercase tracking-widest text-muted-foreground"
+                className="mb-2 block text-xm uppercase tracking-widest text-muted-foreground"
               >
                 Telefono
               </label>
@@ -157,19 +179,20 @@ export function ContactForm() {
                 value={formData.telefono}
                 onChange={handleChange}
                 className="w-full border-b border-border bg-transparent px-0 py-3 text-foreground transition-colors duration-300 placeholder:text-muted-foreground/50 focus:border-gold focus:outline-none"
-                placeholder="9 digitos"
+                placeholder="+569 XXXX XXXX"
               />
             </div>
             <div>
               <label
                 htmlFor="fecha"
-                className="mb-2 block text-xs uppercase tracking-widest text-muted-foreground"
+                className="mb-2 block text-xm uppercase tracking-widest text-muted-foreground"
               >
                 Fecha Evento
               </label>
               <input
                 id="fecha"
                 type="date"
+                min={new Date().toISOString().split('T')[0]}
                 required
                 value={formData.fecha}
                 onChange={handleChange}
@@ -178,80 +201,7 @@ export function ContactForm() {
             </div>
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2">
-            <div>
-              <label
-                htmlFor="tipo"
-                className="mb-2 block text-xs uppercase tracking-widest text-muted-foreground"
-              >
-                Tipo de Evento
-              </label>
-              <select
-                id="tipo"
-                required
-                value={formData.tipo}
-                onChange={handleChange}
-                className="w-full border-b border-border bg-transparent px-0 py-3 text-foreground transition-colors duration-300 focus:border-gold focus:outline-none"
-              >
-                <option value="" className="bg-background text-foreground">Selecciona...</option>
-                <option value="matrimonio" className="bg-background text-foreground">Matrimonio</option>
-                <option value="empresa" className="bg-background text-foreground">Evento Corporativo</option>
-                <option value="aniversario" className="bg-background text-foreground">Aniversario</option>
-                <option value="otro" className="bg-background text-foreground">Otro</option>
-              </select>
-            </div>
-            <div>
-              <label
-                htmlFor="cantidad"
-                className="mb-2 block text-xs uppercase tracking-widest text-muted-foreground"
-              >
-                {"Cantidad de Invitados (min 80)"}
-              </label>
-              <input
-                id="cantidad"
-                type="number"
-                min={80}
-                required
-                value={formData.cantidad}
-                onChange={handleChange}
-                className="w-full border-b border-border bg-transparent px-0 py-3 text-foreground transition-colors duration-300 placeholder:text-muted-foreground/50 focus:border-gold focus:outline-none"
-                placeholder="80"
-              />
-            </div>
-          </div>
-
-          {/* Servicios requeridos */}
-          <div>
-            <p className="mb-4 text-xs uppercase tracking-widest text-muted-foreground">
-              Servicios Requeridos
-            </p>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {SERVICIOS_DISPONIBLES.map((srv) => (
-                <label
-                  key={srv.id}
-                  className="flex cursor-pointer items-center gap-3 group"
-                >
-                  <input
-                    type="checkbox"
-                    value={srv.id}
-                    checked={formData.servicios.includes(srv.id)}
-                    onChange={(e) => {
-                      setFormData((prev) => ({
-                        ...prev,
-                        servicios: e.target.checked
-                          ? [...prev.servicios, srv.id]
-                          : prev.servicios.filter((s) => s !== srv.id),
-                      }))
-                    }}
-                    className="h-4 w-4 shrink-0 accent-[hsl(var(--gold,_38_61%_50%))] cursor-pointer"
-                  />
-                  <span className="text-sm text-muted-foreground transition-colors group-hover:text-foreground">
-                    {srv.label}
-                  </span>
-                </label>
-              ))}
-            </div>
-          </div>
+          
 
           <div>
             <label
@@ -275,10 +225,15 @@ export function ContactForm() {
             {/* Botón enviar formulario */}
             <button
               type="submit"
-              disabled={submitted}
+              disabled={submitted || sending}
               className="group flex items-center gap-3 border border-gold bg-gold px-10 py-4 text-xs uppercase tracking-[0.3em] text-primary-foreground transition-all duration-300 hover:bg-transparent hover:text-gold disabled:opacity-50"
             >
-              {submitted ? (
+              {sending ? (
+                <>
+                  <Loader2 size={14} className="animate-spin" />
+                  Enviando...
+                </>
+              ) : submitted ? (
                 <>
                   <CheckCircle2 size={14} />
                   Enviado
@@ -317,16 +272,28 @@ export function ContactForm() {
             </AnimatePresence>
           </div>
 
-          {/* Nota informativa sobre el PDF */}
+          {/* Mensajes de estado */}
           <AnimatePresence>
             {pdfReady && (
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="text-center text-xs text-muted-foreground"
+                className="flex items-center justify-center gap-2 text-center text-xs text-muted-foreground"
               >
-                ✓ Tu cotización fue enviada. También puedes descargar una copia en PDF.
+                <CheckCircle2 size={13} className="text-green-500" />
+                Tu cotización fue enviada y recibirás un correo con el PDF adjunto.
+              </motion.p>
+            )}
+            {sendError && (
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="flex items-center justify-center gap-2 text-center text-xs text-red-400"
+              >
+                <AlertCircle size={13} />
+                {sendError}
               </motion.p>
             )}
           </AnimatePresence>
