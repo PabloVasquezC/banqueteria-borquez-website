@@ -3,8 +3,9 @@
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { MapPin } from "lucide-react"
-import { useRef } from "react"
+import { useRef, useEffect } from "react"
 import { staggerContainer, slideUp, fadeIn } from "@/lib/animation-utils"
+import { TiltCard } from "./tilt-card"
 
 const venues = [
   {
@@ -32,6 +33,44 @@ const venues = [
 export function EventCenters() {
   const scrollRef = useRef<HTMLDivElement>(null)
 
+  useEffect(() => {
+    const scrollContainer = scrollRef.current
+    if (!scrollContainer) return
+
+    let animationId: number
+    let scrollPos = 0
+
+    const scroll = () => {
+      scrollPos += 0.5 // Adjust speed here
+      if (scrollPos >= scrollContainer.scrollWidth / 2) {
+        scrollPos = 0
+      }
+      scrollContainer.scrollLeft = scrollPos
+      animationId = requestAnimationFrame(scroll)
+    }
+
+    // Clone items for infinite effect
+    const originalChildren = Array.from(scrollContainer.children)
+    originalChildren.forEach(child => {
+      const clone = child.cloneNode(true)
+      scrollContainer.appendChild(clone)
+    })
+
+    animationId = requestAnimationFrame(scroll)
+
+    const handleMouseEnter = () => cancelAnimationFrame(animationId)
+    const handleMouseLeave = () => animationId = requestAnimationFrame(scroll)
+
+    scrollContainer.addEventListener('mouseenter', handleMouseEnter)
+    scrollContainer.addEventListener('mouseleave', handleMouseLeave)
+
+    return () => {
+      cancelAnimationFrame(animationId)
+      scrollContainer.removeEventListener('mouseenter', handleMouseEnter)
+      scrollContainer.removeEventListener('mouseleave', handleMouseLeave)
+    }
+  }, [])
+
   return (
     <section id="centros" className="relative overflow-hidden py-24 lg:py-32">
       {/* Background texture */}
@@ -58,50 +97,44 @@ export function EventCenters() {
         </motion.div>
 
         {/* Venues horizontal scroll */}
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
+        <div
           ref={scrollRef}
-          className="flex gap-4 md:gap-8 overflow-x-auto pb-12 snap-x snap-mandatory -mx-6 px-6 md:mx-0 md:px-0 scrollbar-thin scrollbar-thumb-gold/30 scrollbar-track-transparent hover:scrollbar-thumb-gold/50"
+          className="flex gap-4 md:gap-8 overflow-x-hidden pb-12 -mx-6 px-6 md:mx-0 md:px-0 whitespace-nowrap"
         >
           {venues.map((venue, i) => (
-            <motion.div
-              key={venue.name}
-              variants={slideUp}
-              className="group relative shrink-0 w-[85vw] sm:w-[380px] md:w-[420px] snap-center overflow-hidden rounded-2xl"
+            <div
+              key={`${venue.name}-${i}`}
+              className="group relative shrink-0 w-[85vw] sm:w-[380px] md:w-[420px] overflow-hidden rounded-2xl inline-block"
             >
-              <div className="relative aspect-[3/4] overflow-hidden rounded-xl bg-muted">
-                <Image
-                  src={venue.image}
-                  alt={`Centro de eventos ${venue.name}`}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+              <TiltCard>
+                <div className="relative aspect-[3/4] overflow-hidden rounded-xl bg-muted">
+                  <Image
+                    src={venue.image}
+                    alt={`Centro de eventos ${venue.name}`}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
-                {/* Hover border */}
-                <div className="absolute inset-0 border border-transparent transition-all duration-500 group-hover:border-gold/30 rounded-xl" />
-              </div>
-
-              <div className="absolute bottom-0 left-0 right-0 p-6">
-                <h3 className="font-serif text-2xl text-white">{venue.name}</h3>
-                <div className="mt-2 flex items-center gap-1.5">
-                  <MapPin size={16} className="text-gold" />
-                  <span className="text-xs uppercase tracking-widest text-gold/90 font-medium">
-                    {venue.location}
-                  </span>
+                  {/* Hover border */}
+                  <div className="absolute inset-0 border border-transparent transition-all duration-500 group-hover:border-gold/30 rounded-xl" />
                 </div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
 
-        <p className="mt-4 text-center text-xs uppercase tracking-widest text-muted-foreground">
-          {"Desliza para ver mas"}
-        </p>
+                <div className="absolute bottom-0 left-0 right-0 p-6 whitespace-normal">
+                  <h3 className="font-serif text-2xl text-white">{venue.name}</h3>
+                  <div className="mt-2 flex items-center gap-1.5">
+                    <MapPin size={16} className="text-gold" />
+                    <span className="text-xs uppercase tracking-widest text-gold/90 font-medium">
+                      {venue.location}
+                    </span>
+                  </div>
+                </div>
+              </TiltCard>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )
 }
+

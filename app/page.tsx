@@ -15,7 +15,6 @@ import { HomeGalleryPreview } from "@/components/home-gallery-preview"
 export default function Home() {
   return (
     <main>
-      <Navbar />
       <Hero />
       <EventCenters />
       <ServiceTypes />
@@ -23,9 +22,9 @@ export default function Home() {
       <NatureBanner />
       <HomeGalleryPreview />
       <Testimonials />
-      <ContactForm />
       <Footer />
       <N8nChat />
     </main>
   )
 }
+

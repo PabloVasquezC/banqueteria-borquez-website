@@ -76,14 +76,12 @@ Sigue estos pasos para ejecutar el proyecto localmente:
 
 2. **Instalar dependencias:**
    ```bash
-   npm install
-   # o
    pnpm install
    ```
 
 3. **Ejecutar el servidor de desarrollo:**
    ```bash
-   npm run dev
+   pnpm run dev
    ```
 
 4. **Abrir en el navegador:**

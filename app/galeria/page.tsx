@@ -67,8 +67,6 @@ export default function GalleryPage() {
 
     return (
         <main className="min-h-screen bg-background">
-            <Navbar />
-
             {/* Header */}
             <section className="relative flex h-[50vh] items-center justify-center overflow-hidden">
                 <Image
@@ -111,6 +109,7 @@ export default function GalleryPage() {
             </section>
 
             <Footer />
+
 
             {/* Lightbox Modal */}
             <AnimatePresence>

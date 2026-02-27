@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { staggerContainer, slideUp } from "@/lib/animation-utils"
+import { TiltCard } from "./tilt-card"
 
 const services = [
   {
@@ -42,32 +43,34 @@ export function ServiceTypes() {
               variants={slideUp}
               className="group relative overflow-hidden rounded-sm shadow-md transition-shadow hover:shadow-xl hover:shadow-gold/10"
             >
-              {/* Image */}
-              <div className="relative aspect-[4/5] overflow-hidden">
-                <Image
-                  src={service.image}
-                  alt={service.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-90" />
+              <TiltCard>
+                {/* Image */}
+                <div className="relative aspect-[4/5] overflow-hidden">
+                  <Image
+                    src={service.image}
+                    alt={service.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-90" />
 
-                {/* Content overlay */}
-                <div className="absolute inset-0 flex flex-col justify-end p-8">
-                  <h3 className="font-serif text-2xl text-foreground md:text-3xl translate-y-2 transition-transform duration-300 group-hover:translate-y-0">
-                    {service.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-foreground/80 opacity-0 transform translate-y-4 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
-                    {service.description}
-                  </p>
-                  <a
-                    href="/#cotizar"
-                    className="mt-6 inline-flex w-fit items-center border-b border-gold pb-1 text-xs uppercase tracking-[0.2em] text-gold transition-all duration-300 hover:border-gold-light hover:text-gold-light opacity-0 transform translate-y-4 transition-all duration-500 delay-100 group-hover:opacity-100 group-hover:translate-y-0"
-                  >
-                    Quiero Cotizar
-                  </a>
+                  {/* Content overlay */}
+                  <div className="absolute inset-0 flex flex-col justify-end p-8">
+                    <h3 className="font-serif text-2xl text-foreground md:text-3xl translate-y-2 transition-transform duration-300 group-hover:translate-y-0">
+                      {service.title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-relaxed text-foreground/80 opacity-0 transform translate-y-4 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
+                      {service.description}
+                    </p>
+                    <a
+                      href="/#cotizar"
+                      className="mt-6 inline-flex w-fit items-center border-b border-gold pb-1 text-xs uppercase tracking-[0.2em] text-gold transition-all duration-300 hover:border-gold-light hover:text-gold-light opacity-0 transform translate-y-4 transition-all duration-500 delay-100 group-hover:opacity-100 group-hover:translate-y-0"
+                    >
+                      Quiero Cotizar
+                    </a>
+                  </div>
                 </div>
-              </div>
+              </TiltCard>
             </motion.div>
           ))}
         </motion.div>
@@ -75,3 +78,4 @@ export function ServiceTypes() {
     </section>
   )
 }
+

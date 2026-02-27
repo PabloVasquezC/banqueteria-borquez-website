@@ -2,8 +2,6 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { jsPDF } from "jspdf";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const TIPO_LABELS: Record<string, string> = {
     matrimonio: "Matrimonio",
     empresa: "Evento Corporativo",
@@ -200,8 +198,16 @@ function generarPDFBuffer(datos: DatosCotizacion): Buffer {
 
 export async function POST(req: Request) {
     try {
+        if (!process.env.RESEND_API_KEY) {
+            console.error("RESEND_API_KEY is not defined");
+            return NextResponse.json({ error: "Configuración de correo incompleta" }, { status: 500 });
+        }
+
+        const resend = new Resend(process.env.RESEND_API_KEY);
+
         const body = await req.json();
         const datos: DatosCotizacion = { ...body };
+
 
         const pdfBuffer = generarPDFBuffer(datos);
         const nombreArchivo = `Cotizacion_Borquez_${datos.nombre.replace(/[^a-zA-Z0-9]/g, "_")}.pdf`;

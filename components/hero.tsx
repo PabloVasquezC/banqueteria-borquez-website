@@ -38,36 +38,10 @@ export function Hero() {
   }, [prefersReducedMotion])
 
   return (
-    <section id="inicio" className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden pt-32 pb-20">
-      {/* Animated background slideshow with Ken Burns effect */}
-      <AnimatePresence mode="popLayout">
-        <motion.div
-          key={currentImageIndex}
-          initial={{ opacity: 0, scale: 1 }}
-          animate={{ opacity: 1, scale: prefersReducedMotion ? 1 : 1.1 }}
-          exit={{ opacity: 0 }}
-          transition={{
-            opacity: { duration: 1.5 },
-            scale: { duration: 7, ease: "linear" }
-          }}
-          className="absolute inset-0 z-0"
-        >
-          <Image
-            src={HERO_IMAGES[currentImageIndex]}
-            alt="Elegante montaje de banquete y gastronomía"
-            fill
-            className="object-cover"
-            priority
-            quality={90}
-          />
-        </motion.div>
-      </AnimatePresence>
-
-      {/* Dark overlay - Brightened */}
-      <div className="absolute inset-0 from-black/100 via-black/30 to-background bg-gradient-to-b z-0" />
-
+    <section id="inicio" className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden pt-32 pb-20 bg-black">
       {/* Decorative radial gradient - Reduced opacity */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,var(--background)_100%)] opacity-60 z-0" />
+
 
       {/* Gold decorative line */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent z-10" />
@@ -118,29 +92,7 @@ export function Hero() {
           {"Creamos experiencias gastronomicas unicas donde la elegancia y la naturaleza se unen para celebrar tus momentos mas especiales."}
         </motion.p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
-        >
-          <motion.a
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            href="/#cotizar"
-            className="inline-block border border-gold bg-gold px-10 py-4 text-xs uppercase tracking-[0.3em] text-primary-foreground shadow-[0_0_20px_rgba(234,179,8,0.3)] transition-all duration-300 hover:bg-gold-light hover:shadow-[0_0_30px_rgba(234,179,8,0.5)]"
-          >
-            Quiero Cotizar
-          </motion.a>
-          <motion.a
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            href="/#centros"
-            className="inline-block border border-gold/30 bg-transparent px-10 py-4 text-xs uppercase tracking-[0.3em] text-gold backdrop-blur-sm transition-all duration-300 hover:border-gold hover:bg-gold/10"
-          >
-            Ver Centros
-          </motion.a>
-        </motion.div>
+       
 
         {/* Bottom ornament */}
         <motion.div
