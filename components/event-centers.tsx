@@ -1,11 +1,11 @@
 "use client"
 
-import { motion } from "framer-motion"
 import Image from "next/image"
 import { MapPin } from "lucide-react"
 import { useRef, useEffect } from "react"
-import { staggerContainer, slideUp, fadeIn } from "@/lib/animation-utils"
-import { TiltCard } from "./tilt-card"
+import { motion } from "framer-motion"
+import { fadeIn } from "@/lib/animation-utils"
+import { ParticleCard } from "./MagicBento"
 
 const venues = [
   {
@@ -30,6 +30,8 @@ const venues = [
   },
 ]
 
+const GLOW_COLOR = "234, 179, 8"
+
 export function EventCenters() {
   const scrollRef = useRef<HTMLDivElement>(null)
 
@@ -41,7 +43,7 @@ export function EventCenters() {
     let scrollPos = 0
 
     const scroll = () => {
-      scrollPos += 0.5 // Adjust speed here
+      scrollPos += 0.5
       if (scrollPos >= scrollContainer.scrollWidth / 2) {
         scrollPos = 0
       }
@@ -104,23 +106,35 @@ export function EventCenters() {
           {venues.map((venue, i) => (
             <div
               key={`${venue.name}-${i}`}
-              className="group relative shrink-0 w-[85vw] sm:w-[380px] md:w-[420px] overflow-hidden rounded-2xl inline-block"
+              className="shrink-0 w-[85vw] sm:w-[380px] md:w-[420px] inline-block"
             >
-              <TiltCard>
-                <div className="relative aspect-[3/4] overflow-hidden rounded-xl bg-muted">
+              <ParticleCard
+                className="card relative aspect-[3/4] w-full rounded-2xl overflow-hidden"
+                style={{
+                  backgroundColor: '#060010',
+                  border: '1px solid rgba(234,179,8,0.2)',
+                } as React.CSSProperties}
+                enableTilt={true}
+                enableMagnetism={false}
+                clickEffect={true}
+                particleCount={10}
+                glowColor={GLOW_COLOR}
+                enableEntrance={true}
+                index={i}
+              >
+                {/* Image */}
+                <div className="absolute inset-0 z-0">
                   <Image
                     src={venue.image}
                     alt={`Centro de eventos ${venue.name}`}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-
-                  {/* Hover border */}
-                  <div className="absolute inset-0 border border-transparent transition-all duration-500 group-hover:border-gold/30 rounded-xl" />
                 </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-1" />
 
-                <div className="absolute bottom-0 left-0 right-0 p-6 whitespace-normal">
+                {/* Content overlay */}
+                <div className="absolute bottom-0 left-0 right-0 p-6 whitespace-normal z-10">
                   <h3 className="font-serif text-2xl text-white">{venue.name}</h3>
                   <div className="mt-2 flex items-center gap-1.5">
                     <MapPin size={16} className="text-gold" />
@@ -129,7 +143,7 @@ export function EventCenters() {
                     </span>
                   </div>
                 </div>
-              </TiltCard>
+              </ParticleCard>
             </div>
           ))}
         </div>
@@ -137,4 +151,3 @@ export function EventCenters() {
     </section>
   )
 }
-
