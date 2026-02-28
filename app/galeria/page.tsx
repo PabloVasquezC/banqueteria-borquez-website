@@ -1,8 +1,9 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { X } from "lucide-react"
+import { X, ArrowLeft } from "lucide-react"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import MagicBento, { BentoCardProps } from "@/components/MagicBento"
@@ -44,6 +45,7 @@ const galleryImages = [
 ]
 
 export default function GalleryPage() {
+    const router = useRouter()
     const [isLoading, setIsLoading] = useState(true);
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
@@ -67,6 +69,15 @@ export default function GalleryPage() {
 
     return (
         <main className="min-h-screen bg-background">
+            {/* Floating back button */}
+            <button
+                onClick={() => router.back()}
+                className="fixed top-5 left-5 z-50 flex items-center gap-2 rounded-full bg-black/90 border border-yellow-600/70 px-5 py-3 text-sm font-semibold text-yellow-500 shadow-[0_0_20px_rgba(161,122,40,0.3)] hover:shadow-[0_0_28px_rgba(161,122,40,0.55)] hover:scale-105 active:scale-95 transition-all duration-200 group backdrop-blur-sm"
+                aria-label="Volver atrás"
+            >
+                <ArrowLeft className="w-5 h-5 transition-transform duration-200 group-hover:-translate-x-1" />
+                Volver
+            </button>
             {/* Header */}
             <section className="relative flex h-[50vh] items-center justify-center overflow-hidden">
                 <Image
@@ -78,7 +89,7 @@ export default function GalleryPage() {
                 />
                 <div className="absolute inset-0 bg-background/60 backdrop-blur-[2px]" />
                 <div className="relative z-10 text-center px-6">
-                    
+
                     <h1 className="font-serif text-5xl md:text-7xl text-foreground text-balance drop-shadow-xl">
                         Nuestra Galeria
                     </h1>

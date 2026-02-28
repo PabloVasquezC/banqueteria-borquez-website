@@ -772,7 +772,7 @@ const MagicBento: React.FC<BentoProps> = ({
                                             />
                                         </div>
                                         {/* Gradient Overlay for Readability */}
-                                        <div className="absolute inset-0 z-1 bg-gradient-to-t from-black/90 via-black/40 to-transparent/60" />
+                                        <div className="absolute inset-0 z-1 bg-gradient-to-t from-black via-black/70 to-transparent" />
                                     </>
                                 )}
 
@@ -782,10 +782,10 @@ const MagicBento: React.FC<BentoProps> = ({
                                             <span className="card__label text-base font-semibold tracking-wider uppercase text-xs">{card.label}</span>
                                         </div>
                                         <div className="card__content flex flex-col relative text-white z-10 mt-auto">
-                                            <h3 className={`card__title font-serif text-2xl font-bold m-0 mb-1 drop-shadow-md ${textAutoHide ? 'text-clamp-1' : ''}`}>
+                                            <h3 className={`card__title font-serif text-xl font-bold m-0 mb-1 drop-shadow-lg ${textAutoHide ? 'text-clamp-1' : ''}`}>
                                                 {card.title}
                                             </h3>
-                                            <p className={`card__description text-sm leading-5 opacity-90 font-light drop-shadow-sm ${textAutoHide ? 'text-clamp-2' : ''}`}>
+                                            <p className={`card__description text-xs leading-4 opacity-95 font-light drop-shadow-sm ${textAutoHide ? 'text-clamp-2' : ''}`}>
                                                 {card.description}
                                             </p>
                                         </div>

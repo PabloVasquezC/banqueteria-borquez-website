@@ -1,59 +1,76 @@
 "use client"
 
-import React, { useRef } from 'react'
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
+import type { SpringOptions } from 'motion/react'
+import { useRef, useState } from 'react'
+import { motion, useMotionValue, useSpring } from 'motion/react'
+
+const springValues: SpringOptions = {
+    damping: 30,
+    stiffness: 100,
+    mass: 2,
+}
 
 interface TiltCardProps {
     children: React.ReactNode
+    rotateAmplitude?: number
+    scaleOnHover?: number
     className?: string
 }
 
-export function TiltCard({ children, className = "" }: TiltCardProps) {
-    const x = useMotionValue(0)
-    const y = useMotionValue(0)
+export function TiltCard({
+    children,
+    rotateAmplitude = 10,
+    scaleOnHover = 1.03,
+    className,
+}: TiltCardProps) {
+    const ref = useRef<HTMLDivElement>(null)
+    const rotateX = useSpring(useMotionValue(0), springValues)
+    const rotateY = useSpring(useMotionValue(0), springValues)
+    const scale = useSpring(1, springValues)
 
-    const mouseXSpring = useSpring(x)
-    const mouseYSpring = useSpring(y)
+    const [, setLastY] = useState(0)
 
-    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"])
-    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"])
-
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        const rect = e.currentTarget.getBoundingClientRect()
-        const width = rect.width
-        const height = rect.height
-        const mouseX = e.clientX - rect.left
-        const mouseY = e.clientY - rect.top
-        const xPct = mouseX / width - 0.5
-        const yPct = mouseY / height - 0.5
-        x.set(xPct)
-        y.set(yPct)
+    function handleMouse(e: React.MouseEvent<HTMLDivElement>) {
+        if (!ref.current) return
+        const rect = ref.current.getBoundingClientRect()
+        const offsetX = e.clientX - rect.left - rect.width / 2
+        const offsetY = e.clientY - rect.top - rect.height / 2
+        rotateX.set((offsetY / (rect.height / 2)) * -rotateAmplitude)
+        rotateY.set((offsetX / (rect.width / 2)) * rotateAmplitude)
+        setLastY(offsetY)
     }
 
-    const handleMouseLeave = () => {
-        x.set(0)
-        y.set(0)
+    function handleMouseEnter() {
+        scale.set(scaleOnHover)
+    }
+
+    function handleMouseLeave() {
+        scale.set(1)
+        rotateX.set(0)
+        rotateY.set(0)
     }
 
     return (
-        <motion.div
-            onMouseMove={handleMouseMove}
+        <div
+            ref={ref}
+            className={className}
+            style={{ perspective: '800px' }}
+            onMouseMove={handleMouse}
+            onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            style={{
-                rotateX,
-                rotateY,
-                transformStyle: "preserve-3d",
-            }}
-            className={`relative ${className}`}
         >
-            <div
+            <motion.div
                 style={{
-                    transform: "translateZ(50px)",
-                    transformStyle: "preserve-3d",
+                    rotateX,
+                    rotateY,
+                    scale,
+                    transformStyle: 'preserve-3d',
+                    width: '100%',
+                    height: '100%',
                 }}
             >
                 {children}
-            </div>
-        </motion.div>
+            </motion.div>
+        </div>
     )
 }

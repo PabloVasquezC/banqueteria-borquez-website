@@ -1,11 +1,11 @@
 "use client"
 
 import { motion } from "framer-motion"
-import Image from "next/image"
 import { MapPin } from "lucide-react"
 import { useRef, useEffect } from "react"
 import { staggerContainer, slideUp, fadeIn } from "@/lib/animation-utils"
-import { TiltCard } from "./tilt-card"
+import TiltedCard from "@/components/ui/tilted-card"
+
 
 const venues = [
   {
@@ -106,32 +106,31 @@ export function EventCenters() {
           {venues.map((venue, i) => (
             <div
               key={`${venue.name}-${i}`}
-              className="group relative shrink-0 w-[85vw] sm:w-[380px] md:w-[420px] overflow-hidden rounded-2xl inline-block"
+              className="group relative shrink-0 w-[85vw] sm:w-[380px] md:w-[420px] inline-block"
             >
-              <TiltCard>
-                <div className="relative aspect-[3/4] overflow-hidden rounded-xl bg-muted">
-                  <Image
-                    src={venue.image}
-                    alt={`Centro de eventos ${venue.name}`}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-
-                  {/* Hover border */}
-                  <div className="absolute inset-0 border border-transparent transition-all duration-500 group-hover:border-gold/30 rounded-xl" />
-                </div>
-
-                <div className="absolute bottom-0 left-0 right-0 p-6 whitespace-normal">
-                  <h3 className="font-serif text-2xl text-white">{venue.name}</h3>
-                  <div className="mt-2 flex items-center gap-1.5">
-                    <MapPin size={16} className="text-gold" />
-                    <span className="text-xs uppercase tracking-widest text-gold/90 font-medium">
+              <TiltedCard
+                imageSrc={venue.image}
+                altText={venue.name}
+                captionText={`${venue.name} — ${venue.location}`}
+                containerHeight="440px"
+                containerWidth="100%"
+                imageHeight="440px"
+                imageWidth="100%"
+                rotateAmplitude={10}
+                scaleOnHover={1.05}
+                showMobileWarning={false}
+                showTooltip
+                displayOverlayContent
+                overlayContent={
+                  <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black/70 to-transparent rounded-b-[15px]">
+                    <p className="text-white font-semibold text-lg leading-tight">{venue.name}</p>
+                    <p className="text-white/70 text-sm flex items-center gap-1 mt-1">
+                      <MapPin className="w-3 h-3" />
                       {venue.location}
-                    </span>
+                    </p>
                   </div>
-                </div>
-              </TiltCard>
+                }
+              />
             </div>
           ))}
         </div>
