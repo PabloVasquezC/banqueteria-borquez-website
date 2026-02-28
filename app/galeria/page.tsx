@@ -78,9 +78,7 @@ export default function GalleryPage() {
                 />
                 <div className="absolute inset-0 bg-background/60 backdrop-blur-[2px]" />
                 <div className="relative z-10 text-center px-6">
-                    <span className="text-xs uppercase tracking-[0.4em] text-gold/80 block mb-4">
-                        Portafolio
-                    </span>
+                    
                     <h1 className="font-serif text-5xl md:text-7xl text-foreground text-balance drop-shadow-xl">
                         Nuestra Galeria
                     </h1>

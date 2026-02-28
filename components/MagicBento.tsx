@@ -118,7 +118,7 @@ const updateCardGlowProperties = (card: HTMLElement, mouseX: number, mouseY: num
     card.style.setProperty('--glow-radius', `${radius}px`);
 };
 
-export const ParticleCard: React.FC<{
+const ParticleCard: React.FC<{
     children: React.ReactNode;
     className?: string;
     disableAnimations?: boolean;
