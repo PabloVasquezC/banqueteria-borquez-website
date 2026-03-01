@@ -9,9 +9,9 @@ const HERO_IMAGES = [
   "/images/hero0.jpg",
   "/images/hero2.jpg",
   "/images/hero3.jpg",
-  "/images/hero4.jpg",
+  // hero4.jpg was removed from the repo – keep only existing files
   "/images/hero6.jpg",
-  "/images/hero7.jpg",
+  // hero7.jpg was also deleted
 ]
 
 export function Hero() {

@@ -66,7 +66,7 @@ const defaultCardData: BentoCardProps[] = [
         title: 'Graduaciones',
         description: 'Celebra tus logros con estilo',
         label: 'Fiestas',
-        img: '/images/DSC04901.jpg'
+        img: '/images/DSC04904.jpg' // replaced missing image with one that exists
     },
     {
         color: '#060010',

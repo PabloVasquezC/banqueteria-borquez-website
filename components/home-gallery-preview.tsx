@@ -30,7 +30,7 @@ export function HomeGalleryPreview() {
             title: 'Graduaciones',
             description: 'Celebra tus logros con estilo',
             label: 'Fiestas',
-            img: '/images/DSC04901.jpg'
+            img: '/images/DSC04904.jpg' // swapped out deleted image
         },
         {
             title: 'Cumpleaños',

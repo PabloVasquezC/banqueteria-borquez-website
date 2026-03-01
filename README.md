@@ -95,7 +95,7 @@ Sigue estos pasos para ejecutar el proyecto localmente:
 
 | Gastronomía de Autor | Entornos Naturales | Detalle en el Servicio |
 | :---: | :---: | :---: |
-| ![Comida](./public/images/DSC04860.jpg) | ![Entorno](./public/images/hero2.jpg) | ![Mesa](./public/images/hero4.jpg) |
+| ![Comida](./public/images/DSC04860.jpg) | ![Entorno](./public/images/hero2.jpg) | ![Mesa](./public/images/hero3.jpg) |
 
 </div>
 

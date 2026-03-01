@@ -16,13 +16,13 @@ const services = [
     title: "Empresas",
     description:
       "Servicios corporativos de alto nivel. Lanzamientos, cenas de gala y eventos institucionales con un sello de distincion.",
-    image: "/images/hero4.jpg",
+    image: "/images/hero3.jpg", // hero4 removed
   },
   {
     title: "Otros Eventos",
     description:
       "Celebraciones privadas, aniversarios y encuentros exclusivos. Transformamos cualquier ocasion en un recuerdo inolvidable.",
-    image: "/images/DSC05145.jpg",
+    image: "/images/DSC04986.jpg", // swapped out deleted DSC05145 for an existing photo
   },
 ]
 
