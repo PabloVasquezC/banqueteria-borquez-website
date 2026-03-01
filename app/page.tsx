@@ -15,6 +15,7 @@ import { HomeGalleryPreview } from "@/components/home-gallery-preview"
 export default function Home() {
   return (
     <main>
+      <Navbar />
       <Hero />
       <EventCenters />
       <ServiceTypes />

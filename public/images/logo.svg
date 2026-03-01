@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <!-- Outer ring -->
+  <circle cx="60" cy="60" r="56" stroke="#C9A84C" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.5"/>
+
+  <!-- Crown base -->
+  <path d="M28 78 L92 78 L88 58 L74 70 L60 44 L46 70 L32 58 Z"
+        fill="none" stroke="#C9A84C" stroke-width="2" stroke-linejoin="round"/>
+
+  <!-- Crown jewels -->
+  <circle cx="60" cy="42" r="4" fill="#C9A84C" opacity="0.9"/>
+  <circle cx="30" cy="56" r="3" fill="#C9A84C" opacity="0.7"/>
+  <circle cx="90" cy="56" r="3" fill="#C9A84C" opacity="0.7"/>
+
+  <!-- Base line -->
+  <rect x="26" y="78" width="68" height="4" rx="2" fill="#C9A84C" opacity="0.8"/>
+  <rect x="30" y="84" width="60" height="2" rx="1" fill="#C9A84C" opacity="0.4"/>
+</svg>
