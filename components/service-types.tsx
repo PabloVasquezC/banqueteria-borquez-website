@@ -10,7 +10,7 @@ const services = [
     title: "Matrimonios",
     description:
       "Creamos la atmosfera perfecta para el dia mas importante de tu vida, cuidando cada detalle con elegancia natural.",
-    image: "/images/DSC04986.jpg",
+    image: "/images/DSC04879.jpg",
   },
   {
     title: "Empresas",
@@ -22,7 +22,7 @@ const services = [
     title: "Otros Eventos",
     description:
       "Celebraciones privadas, aniversarios y encuentros exclusivos. Transformamos cualquier ocasion en un recuerdo inolvidable.",
-    image: "/images/DSC04986.jpg", // swapped out deleted DSC05145 for an existing photo
+    image: "/images/DSC04865.jpg", // swapped out deleted DSC05145 for an existing photo
   },
 ]
 

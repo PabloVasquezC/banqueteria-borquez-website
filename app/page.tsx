@@ -23,6 +23,7 @@ export default function Home() {
       <NatureBanner />
       <HomeGalleryPreview />
       <Testimonials />
+      <ContactForm />
       <Footer />
       <N8nChat />
     </main>
