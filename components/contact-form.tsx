@@ -6,28 +6,12 @@ import { Send, FileDown, CheckCircle2, AlertCircle, Loader2 } from "lucide-react
 import { fadeIn } from "@/lib/animation-utils"
 import { generarCotizacionPDF } from "@/lib/generarCotizacionPDF"
 
-const SERVICIOS_DISPONIBLES = [
-  { id: "catering", label: "Catering y alimentación" },
-  { id: "coordinacion", label: "Coordinación integral del evento" },
-  { id: "montaje", label: "Montaje y decoración de salón" },
-  { id: "personal", label: "Personal de servicio" },
-  { id: "vajilla", label: "Vajilla, cristalería y mantelería" },
-  { id: "sonido", label: "Amplificación y sonido" },
-  { id: "iluminacion", label: "Iluminación especial" },
-  { id: "flores", label: "Flores y centros de mesa" },
-  { id: "fotografia", label: "Fotografía y video" },
-  { id: "transporte", label: "Transporte y traslados" },
-] as const
-
 interface FormData {
   nombre: string
   email: string
   telefono: string
   fecha: string
-  tipo: string
-  cantidad: string
   consultas: string
-  servicios: string[]
 }
 
 const initialForm: FormData = {
@@ -35,10 +19,7 @@ const initialForm: FormData = {
   email: "",
   telefono: "",
   fecha: "",
-  tipo: "",
-  cantidad: "",
   consultas: "",
-  servicios: [],
 }
 
 export function ContactForm() {
@@ -85,11 +66,7 @@ export function ContactForm() {
   const handleDescargarPDF = async () => {
     setGeneratingPDF(true)
     try {
-      // Convertir IDs a labels legibles para el PDF
-      const serviciosConNombre = formData.servicios.map(
-        (id) => SERVICIOS_DISPONIBLES.find((s) => s.id === id)?.label ?? id
-      )
-      await generarCotizacionPDF({ ...formData, servicios: serviciosConNombre })
+      await generarCotizacionPDF(formData)
     } finally {
       setGeneratingPDF(false)
     }
@@ -200,8 +177,6 @@ export function ContactForm() {
               />
             </div>
           </div>
-
-          
 
           <div>
             <label
