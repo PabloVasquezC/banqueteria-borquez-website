@@ -7,7 +7,7 @@ export function NatureBanner() {
   return (
     <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden bg-fixed bg-center bg-cover bg-no-repeat"
       style={{
-        backgroundImage: "url('/images/nature-surprise.jpg')"
+        backgroundImage: "url('/images/parque-oh2.png')"
       }}
     >
       <div className="absolute inset-0 bg-background/60" />

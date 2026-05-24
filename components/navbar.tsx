@@ -12,12 +12,7 @@ export function Navbar() {
     >
       <a href="#inicio" className="flex items-center group">
         <div className="flex flex-col items-start transition-transform duration-300 group-hover:scale-105">
-          <span className="font-serif text-xl tracking-wider text-gold lg:text-2xl font-bold">
-            B<span className="text-gold/80 font-normal">orquez</span>
-          </span>
-          <span className="text-[8px] uppercase tracking-[0.3em] text-gold-light/70 lg:text-[10px]">
-            Banquetería
-          </span>
+          <img src="images/logo-borquez.webp" alt="Logo" className="max-w-[160px] max-h-[120px]" />
         </div>
       </a>
     </motion.div>

@@ -7,7 +7,7 @@ import { fadeIn } from "@/lib/animation-utils"
 
 const navLinks = [
   { label: "Inicio", href: "#inicio" },
-  { label: "Centros de Eventos", href: "#centros" },
+  { label: "Tipos de Eventos", href: "#centros" },
   { label: "Nuestros Servicios", href: "#servicios" },
   { label: "Cotizar", href: "#cotizar" },
 ]
@@ -108,7 +108,7 @@ export function Footer() {
               Inicio
             </a>
             <a href="/#centros" className="transition-colors hover:text-gold">
-              Centros de Eventos
+              Tipos de Eventos
             </a>
             <a href="/#servicios" className="transition-colors hover:text-gold">
               Servicios

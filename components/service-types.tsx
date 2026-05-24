@@ -5,7 +5,7 @@ import Image from "next/image"
 import { staggerContainer, slideUp } from "@/lib/animation-utils"
 import { TiltCard } from "./tilt-card"
 
-const services = [
+export const services = [
   {
     title: "Matrimonios",
     description:
@@ -23,6 +23,49 @@ const services = [
     description:
       "Celebraciones privadas, aniversarios y encuentros exclusivos. Transformamos cualquier ocasion en un recuerdo inolvidable.",
     image: "/images/DSC04865.jpg", // swapped out deleted DSC05145 for an existing photo
+  },
+  //add Almuerzos, Coctel, Buffet, Lanzamientos, Bautizos, Cumpleaños, Aniversarios
+  {
+    title: "Almuerzos",
+    description:
+      "Almuerzos para todo tipo de ocasiones. Creamos la atmosfera perfecta para el dia mas importante de tu vida, cuidando cada detalle con elegancia natural.",
+    image: "/images/DSC04872.jpg",
+  },
+  {
+    title: "Coctel",
+    description:
+      "Cocteles para todo tipo de ocasiones. Creamos la atmosfera perfecta para el dia mas importante de tu vida, cuidando cada detalle con elegancia natural.",
+    image: "/images/DSC04879.jpg",
+  },
+  {
+    title: "Buffet",
+    description:
+      "Buffets para todo tipo de ocasiones. Creamos la atmosfera perfecta para el dia mas importante de tu vida, cuidando cada detalle con elegancia natural.",
+    image: "/images/DSC04913.jpg",
+  },
+  {
+    title: "Lanzamientos",
+    description:
+      "Lanzamientos para todo tipo de ocasiones. Creamos la atmosfera perfecta para el dia mas importante de tu vida, cuidando cada detalle con elegancia natural.",
+    image: "/images/DSC04928.jpg",
+  },
+  {
+    title: "Bautizos",
+    description:
+      "Bautizos para todo tipo de ocasiones. Creamos la atmosfera perfecta para el dia mas importante de tu vida, cuidando cada detalle con elegancia natural.",
+    image: "/images/DSC04945.jpg",
+  },
+  {
+    title: "Cumpleaños",
+    description:
+      "Cumpleaños para todo tipo de ocasiones. Creamos la atmosfera perfecta para el dia mas importante de tu vida, cuidando cada detalle con elegancia natural.",
+    image: "/images/DSC04969.jpg",
+  },
+  {
+    title: "Aniversarios",
+    description:
+      "Aniversarios para todo tipo de ocasiones. Creamos la atmosfera perfecta para el dia mas importante de tu vida, cuidando cada detalle con elegancia natural.",
+    image: "/images/DSC04968.jpg",
   },
 ]
 
