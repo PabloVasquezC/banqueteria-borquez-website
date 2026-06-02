@@ -38,9 +38,12 @@ export function N8nChat() {
       // Auto-open chat widget by default on load
       const checkInterval = setInterval(() => {
         const toggleButton = document.querySelector('.chat-window-toggle') as HTMLElement;
-        const chatWindow = document.querySelector('.chat-window');
         if (toggleButton) {
-          if (!chatWindow) {
+          const chatWindow = document.querySelector('.chat-window') as HTMLElement;
+          // Since n8n chat uses Vue's v-show, the element remains in the DOM but with display: none.
+          // We check if it's closed by inspecting if it is hidden.
+          const isClosed = !chatWindow || chatWindow.style.display === 'none' || window.getComputedStyle(chatWindow).display === 'none';
+          if (isClosed) {
             toggleButton.click();
           }
           clearInterval(checkInterval);
