@@ -54,13 +54,7 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.1 }}
           className="mx-auto mb-6 flex justify-center"
         >
-          {/* Placeholder for Logo - User to replace src if needed or file not found */}
-          {/* <Image src="/images/logo.png" alt="Banqueteria Borquez" width={180} height={80} className="h-auto w-32 md:w-48" /> */}
-          {/* Fallback text if logo not present, but styled as logo */}
-          <div className="flex flex-col items-center">
-            <span className="font-serif text-4xl md:text-7xl text-gold">B</span>
-            <span className="text-[10px] uppercase tracking-[0.4em] text-gold/80 md:text-xs">Banquetería Borquez</span>
-          </div>
+          <img src="images/logo-borquez.webp" alt="Logo" className="max-w-[320px] max-h-[240px]" />
         </motion.div>
 
         <motion.div
