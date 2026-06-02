@@ -34,6 +34,21 @@ export function N8nChat() {
           },
         },
       });
+
+      // Auto-open chat widget by default on load
+      const checkInterval = setInterval(() => {
+        const toggleButton = document.querySelector('.chat-window-toggle') as HTMLElement;
+        const chatWindow = document.querySelector('.chat-window');
+        if (toggleButton) {
+          if (!chatWindow) {
+            toggleButton.click();
+          }
+          clearInterval(checkInterval);
+        }
+      }, 100);
+
+      // Clear interval after 5 seconds to avoid memory leak
+      setTimeout(() => clearInterval(checkInterval), 5000);
     });
   }, []);
 
