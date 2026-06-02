@@ -29,6 +29,11 @@ export const metadata: Metadata = {
     'banquetes',
   ],
   manifest: '/manifest.json',
+  icons: {
+    icon: '/images/logo-sin-fondo.png',
+    shortcut: '/images/logo-sin-fondo.png',
+    apple: '/images/logo-sin-fondo.png',
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
