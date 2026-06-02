@@ -7,65 +7,56 @@ import { TiltCard } from "./tilt-card"
 
 export const services = [
   {
-    title: "Matrimonios",
+    title: "Matrimonios y Celebraciones de Amor",
     description:
-      "Creamos la atmosfera perfecta para el dia mas importante de tu vida, cuidando cada detalle con elegancia natural.",
+      `Haz realidad uno de los momentos más importantes de tu vida en un entorno natural, elegante y exclusivo. Contamos con espacios especialmente diseñados para ceremonias al aire libre, cócteles, cenas y celebraciones, combinando infraestructura de primer nivel, gastronomía de excelencia y una atención cuidadosamente planificada.
+
+Incluye espacios para ceremonia, cóctel y recepción, banquetería personalizada, montaje, decoración, estacionamiento privado, coordinación integral del evento y todo lo necesario para que tú y tus invitados disfruten una experiencia inolvidable.`,
     image: "/images/DSC04879.jpg",
   },
   {
-    title: "Empresas",
+    title: "Celebraciones Familiares",
     description:
-      "Servicios corporativos de alto nivel. Lanzamientos, cenas de gala y eventos institucionales con un sello de distincion.",
-    image: "/images/hero3.jpg", // hero4 removed
-  },
-  {
-    title: "Otros Eventos",
-    description:
-      "Celebraciones privadas, aniversarios y encuentros exclusivos. Transformamos cualquier ocasion en un recuerdo inolvidable.",
-    image: "/images/DSC04865.jpg", // swapped out deleted DSC05145 for an existing photo
-  },
-  //add Almuerzos, Coctel, Buffet, Lanzamientos, Bautizos, Cumpleaños, Aniversarios
-  {
-    title: "Almuerzos",
-    description:
-      "Almuerzos para todo tipo de ocasiones. Creamos la atmosfera perfecta para el dia mas importante de tu vida, cuidando cada detalle con elegancia natural.",
-    image: "/images/DSC04872.jpg",
-  },
-  {
-    title: "Coctel",
-    description:
-      "Cocteles para todo tipo de ocasiones. Creamos la atmosfera perfecta para el dia mas importante de tu vida, cuidando cada detalle con elegancia natural.",
-    image: "/images/DSC04879.jpg",
-  },
-  {
-    title: "Buffet",
-    description:
-      "Buffets para todo tipo de ocasiones. Creamos la atmosfera perfecta para el dia mas importante de tu vida, cuidando cada detalle con elegancia natural.",
-    image: "/images/DSC04913.jpg",
-  },
-  {
-    title: "Lanzamientos",
-    description:
-      "Lanzamientos para todo tipo de ocasiones. Creamos la atmosfera perfecta para el dia mas importante de tu vida, cuidando cada detalle con elegancia natural.",
-    image: "/images/DSC04928.jpg",
-  },
-  {
-    title: "Bautizos",
-    description:
-      "Bautizos para todo tipo de ocasiones. Creamos la atmosfera perfecta para el dia mas importante de tu vida, cuidando cada detalle con elegancia natural.",
-    image: "/images/DSC04945.jpg",
-  },
-  {
-    title: "Cumpleaños",
-    description:
-      "Cumpleaños para todo tipo de ocasiones. Creamos la atmosfera perfecta para el dia mas importante de tu vida, cuidando cada detalle con elegancia natural.",
+      `Celebra los momentos más importantes junto a quienes más quieres en un entorno acogedor, seguro y lleno de encanto. Esta experiencia es ideal para cumpleaños, bautizos, aniversarios, fiestas de quince años, reuniones familiares y cualquier ocasión especial que merezca ser recordada.
+
+Incluye salón equipado, mobiliario, áreas verdes, banquetería personalizada, servicio de bar, decoración según la temática elegida, personal de apoyo y coordinación para que cada detalle contribuya a una celebración única.`,
     image: "/images/DSC04969.jpg",
   },
   {
-    title: "Aniversarios",
+    title: "Galas y Licenciaturas",
     description:
-      "Aniversarios para todo tipo de ocasiones. Creamos la atmosfera perfecta para el dia mas importante de tu vida, cuidando cada detalle con elegancia natural.",
+      `Reconoce y celebra el cierre de una etapa significativa con una experiencia elegante y memorable. Diseñado especialmente para galas de Octavo Básico, Cuarto Medio, titulaciones y ceremonias de reconocimiento institucional.
+
+Incluye salón elegantemente ambientado, montaje para estudiantes, familias e invitados, servicio de banquetería, pista de baile, espacios para fotografías, producción técnica y coordinación integral del evento.`,
     image: "/images/DSC04968.jpg",
+  },
+  {
+    title: "Eventos Corporativos y Empresariales",
+    description:
+      `Espacios diseñados para potenciar la imagen y los objetivos de tu organización. Ideal para aniversarios de empresa, lanzamientos de productos, reuniones estratégicas, celebraciones institucionales, premiaciones, seminarios y encuentros corporativos.
+
+Incluye salones equipados, mobiliario, apoyo logístico, equipamiento audiovisual según requerimientos, servicio de alimentación, coffee break, cócteles o cenas corporativas, además de acompañamiento profesional durante toda la actividad.`,
+    image: "/images/hero3.jpg",
+  },
+  {
+    title: "Jornadas de Capacitación y Seminarios",
+    description:
+      `Ambientes especialmente preparados para el aprendizaje, la formación y el desarrollo de equipos de trabajo. Una alternativa ideal para capacitaciones, talleres, cursos, jornadas estratégicas y actividades de integración empresarial.
+
+Incluye salón equipado, mobiliario, apoyo técnico y logístico, conectividad, coffee break y opciones de desayuno, almuerzo, cena o servicios gastronómicos adaptados a la duración de la actividad.`,
+    image: "/images/DSC04928.jpg",
+  },
+  {
+    title: "Servicios Gastronómicos Corporativos",
+    description:
+      `Complementa tus reuniones y eventos con propuestas gastronómicas diseñadas para sorprender a tus invitados y potenciar la experiencia de los asistentes.
+
+Coffee Break Gourmet
+Selección de café, té, infusiones, jugos, bebidas, pastelería artesanal y bocados dulces y salados, presentados con una propuesta elegante y profesional.
+
+Desayunos Ejecutivos
+Una alternativa ideal para reuniones matinales, encuentros empresariales o celebraciones especiales. Incluye variedad de preparaciones dulces y saladas, café, té, jugos naturales y atención personalizada en un entorno cómodo y acogedor.`,
+    image: "/images/DSC04913.jpg",
   },
 ]
 
@@ -102,7 +93,7 @@ export function ServiceTypes() {
                     <h3 className="font-serif text-2xl text-foreground md:text-3xl translate-y-2 transition-transform duration-300 group-hover:translate-y-0">
                       {service.title}
                     </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-foreground/80 opacity-0 transform translate-y-4 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
+                    <p className="mt-3 text-sm leading-relaxed text-foreground/80 opacity-0 transform translate-y-4 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0 whitespace-pre-line">
                       {service.description}
                     </p>
                     <a
